@@ -95,6 +95,7 @@ class MainPage(Frame):
                     yes_button.config(state=ACTIVE)
                     no_button.config(state=ACTIVE)
                     answer_input.config(bd=0)
+                    home_button.pack(side=BOTTOM)
                 else:
                     new_text = f"Correct answer was {MainPage.integer}"
                     number_display.config(text=new_text)
@@ -137,12 +138,26 @@ class MainPage(Frame):
             confirm_button.config(state=DISABLED)
             number_display.config(text=new_text)
             answer_input.config(bd=1)
+            home_button.pack_forget()
 
         def no():
             MainAppBody.quit(self)
 
+        def home():
+            home_button.pack_forget()
+            yes_button.config(state=DISABLED)
+            no_button.config(state=DISABLED)
+            buttons_container.pack()
+            MainPage.integer = randint(11, 99)
+            new_text = f"Square root of {MainPage.integer ** 2} is"
+            confirm_button.config(state=DISABLED)
+            number_display.config(text=new_text)
+            answer_input.config(bd=1)
+            controller.show_frame(GreetingsPage)
+
         button_font = ("Arial", 50)
-        colours = ["black", '#00ff00', "green", "#0a0a0a", "#0a0a0c", "#0a0c0a", "#0c0a0a", "#ff001f", "red"]
+        colours = ["black", '#00ff00', "green", "#0a0a0a", "#0a0a0c", "#0a0c0a", "#0c0a0a", "#ff001f", "red",
+                   "#0a0a00", "#000a0a"]
         big_button_font = ("Arial", 90)
 
         yes_button = Button(self, text="Yes", font=big_button_font, command=yes, bd=0, bg=colours[0], fg=colours[1],
@@ -154,6 +169,9 @@ class MainPage(Frame):
                            activeforeground=colours[8], activebackground=colours[0], disabledforeground=colours[0],
                            state=DISABLED)
         no_button.pack(side=LEFT)
+
+        home_button = Button(self, text="Home", font=big_button_font, command=home, bd=0, bg=colours[0], fg=colours[9],
+                             activeforeground=colours[10], activebackground=colours[0], disabledforeground=colours[0])
 
         buttons_container = Label(self, bg="black")
         buttons_container.pack(side=BOTTOM)

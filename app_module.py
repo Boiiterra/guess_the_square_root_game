@@ -6,7 +6,7 @@ class MainAppBody(Tk):
 
     def __init__(self, *args, **kwargs):
         Tk.__init__(self, *args, **kwargs)
-        self.title("Guess the square root")
+        self.title("Guess the square root of random number")
         self.iconbitmap("icon.ico")
         self.geometry(f"{(self.winfo_screenwidth() // 2) + 500}x{(self.winfo_screenheight() // 2) + 200}")
         self.resizable(0, 0)
@@ -39,8 +39,8 @@ class GreetingsPage(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent, bg="black")
 
-        text = "Welcome to guess the square root\n" \
-               "of random number game. Range of\n" \
+        text = "Welcome to 'guess the square root\n" \
+               "of random number' game. Range of\n" \
                "numbers starts at 11 and ends at 99.\n" \
                "\nPress start to continue."
 

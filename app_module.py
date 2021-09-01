@@ -1,5 +1,5 @@
 from tkinter import Tk, Frame, Label, Button, Entry
-from tkinter.constants import ACTIVE, TOP, BOTH, CENTER, DISABLED, NORMAL, END, BOTTOM, LEFT, RIGHT
+from tkinter.constants import ACTIVE, TOP, BOTH, CENTER, DISABLED, NORMAL, END, BOTTOM
 from random import randint
 
 

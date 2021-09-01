@@ -85,6 +85,16 @@ class MainPage(Frame):
             answer_input.config(state=DISABLED)
             confirm_button.config(state=DISABLED)
 
+        def home():
+            controller.show_frame(GreetingsPage)
+            MainPage.integer = randint(11, 99)
+            new_text = f"Square root of {MainPage.integer ** 2} is"
+            number_display.config(text=new_text)
+            buttons_on()
+            clear_button.config(text="Clear", command=clear)
+            confirm_button.config(state=DISABLED)
+            answer_input.config(state=DISABLED)
+
         def buttons_on():
             one.config(state=ACTIVE)
             two.config(state=ACTIVE)
@@ -96,7 +106,6 @@ class MainPage(Frame):
             eight.config(state=ACTIVE)
             nine.config(state=ACTIVE)
             zero.config(state=ACTIVE)
-            clear_button.config(state=ACTIVE)
 
         def buttons_off():
             one.config(state=DISABLED)
@@ -109,7 +118,6 @@ class MainPage(Frame):
             eight.config(state=DISABLED)
             nine.config(state=DISABLED)
             zero.config(state=DISABLED)
-            clear_button.config(state=DISABLED)
 
         def confirm():
             answer_input.config(state=NORMAL)
@@ -120,21 +128,25 @@ class MainPage(Frame):
                     number_display.config(text=new_text)
                     answer_input.config(bd=0)
                     buttons_off()
+                    clear_button.config(text="Home", command=home, fg=colours[9], activeforeground=colours[8])
                 else:
                     new_text = f"Correct answer was {MainPage.integer}"
                     number_display.config(text=new_text)
                     buttons_off()
+                    clear_button.config(text="Home", command=home, fg=colours[9], activeforeground=colours[8])
             else:
                 MainPage.integer = randint(11, 99)
                 new_text = f"Square root of {MainPage.integer ** 2} is"
                 number_display.config(text=new_text)
                 buttons_on()
+                clear_button.config(text="Clear", command=clear, fg=colours[1], activeforeground=colours[2])
                 confirm_button.config(state=DISABLED)
             answer_input.delete(0, END)
             answer_input.config(state=DISABLED)
 
         button_font = ("Arial", 50)
-        colours = ["black", '#00ff00', "green", "#0a0a0a", "#0a0a0c", "#0a0c0a", "#0c0a0a", "#ff001f"]
+        colours = ["black", '#00ff00', "green", "#0a0a0a", "#0a0a0c", "#0a0c0a", "#0c0a0a", "#ff001f", "dark blue",
+                   "blue"]
 
         buttons_container = Label(self, bg="black")
         buttons_container.pack(side=BOTTOM)

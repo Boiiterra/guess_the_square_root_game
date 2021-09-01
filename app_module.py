@@ -85,94 +85,56 @@ class MainPage(Frame):
             answer_input.config(state=DISABLED)
             confirm_button.config(state=DISABLED)
 
+        def buttons_on():
+            one.config(state=ACTIVE)
+            two.config(state=ACTIVE)
+            three.config(state=ACTIVE)
+            four.config(state=ACTIVE)
+            five.config(state=ACTIVE)
+            six.config(state=ACTIVE)
+            seven.config(state=ACTIVE)
+            eight.config(state=ACTIVE)
+            nine.config(state=ACTIVE)
+            zero.config(state=ACTIVE)
+            clear_button.config(state=ACTIVE)
+
+        def buttons_off():
+            one.config(state=DISABLED)
+            two.config(state=DISABLED)
+            three.config(state=DISABLED)
+            four.config(state=DISABLED)
+            five.config(state=DISABLED)
+            six.config(state=DISABLED)
+            seven.config(state=DISABLED)
+            eight.config(state=DISABLED)
+            nine.config(state=DISABLED)
+            zero.config(state=DISABLED)
+            clear_button.config(state=DISABLED)
+
         def confirm():
             answer_input.config(state=NORMAL)
             if len(answer_input.get()) != 0:
                 answer = int(answer_input.get())
                 if answer == MainPage.integer:
-                    new_text = f"Your answer is correct.\n{answer} = {MainPage.integer}\nDo you want to restart?"
+                    new_text = f"Your answer is correct."
                     number_display.config(text=new_text)
-                    buttons_container.pack_forget()
-                    yes_button.config(state=ACTIVE)
-                    no_button.config(state=ACTIVE)
                     answer_input.config(bd=0)
-                    home_button.pack(side=BOTTOM)
+                    buttons_off()
                 else:
                     new_text = f"Correct answer was {MainPage.integer}"
                     number_display.config(text=new_text)
-                    one.config(state=DISABLED)
-                    two.config(state=DISABLED)
-                    three.config(state=DISABLED)
-                    four.config(state=DISABLED)
-                    five.config(state=DISABLED)
-                    six.config(state=DISABLED)
-                    seven.config(state=DISABLED)
-                    eight.config(state=DISABLED)
-                    nine.config(state=DISABLED)
-                    zero.config(state=DISABLED)
-                    clear_button.config(state=DISABLED)
+                    buttons_off()
             else:
                 MainPage.integer = randint(11, 99)
                 new_text = f"Square root of {MainPage.integer ** 2} is"
                 number_display.config(text=new_text)
-                one.config(state=ACTIVE)
-                two.config(state=ACTIVE)
-                three.config(state=ACTIVE)
-                four.config(state=ACTIVE)
-                five.config(state=ACTIVE)
-                six.config(state=ACTIVE)
-                seven.config(state=ACTIVE)
-                eight.config(state=ACTIVE)
-                nine.config(state=ACTIVE)
-                zero.config(state=ACTIVE)
-                clear_button.config(state=ACTIVE)
+                buttons_on()
                 confirm_button.config(state=DISABLED)
             answer_input.delete(0, END)
             answer_input.config(state=DISABLED)
 
-        def yes():
-            buttons_container.pack()
-            MainPage.integer = randint(11, 99)
-            new_text = f"Square root of {MainPage.integer ** 2} is"
-            yes_button.config(state=DISABLED)
-            no_button.config(state=DISABLED)
-            confirm_button.config(state=DISABLED)
-            number_display.config(text=new_text)
-            answer_input.config(bd=1)
-            home_button.pack_forget()
-
-        def no():
-            MainAppBody.quit(self)
-
-        def home():
-            home_button.pack_forget()
-            yes_button.config(state=DISABLED)
-            no_button.config(state=DISABLED)
-            buttons_container.pack()
-            MainPage.integer = randint(11, 99)
-            new_text = f"Square root of {MainPage.integer ** 2} is"
-            confirm_button.config(state=DISABLED)
-            number_display.config(text=new_text)
-            answer_input.config(bd=1)
-            controller.show_frame(GreetingsPage)
-
         button_font = ("Arial", 50)
-        colours = ["black", '#00ff00', "green", "#0a0a0a", "#0a0a0c", "#0a0c0a", "#0c0a0a", "#ff001f", "red",
-                   "#0a0a00", "#000a0a"]
-        big_button_font = ("Arial", 90)
-
-        yes_button = Button(self, text="Yes", font=big_button_font, command=yes, bd=0, bg=colours[0], fg=colours[1],
-                            activeforeground=colours[2], activebackground=colours[0], disabledforeground=colours[0],
-                            state=DISABLED)
-        yes_button.pack(side=RIGHT)
-
-        no_button = Button(self, text="No ", font=big_button_font, command=no, bd=0, bg=colours[0], fg=colours[7],
-                           activeforeground=colours[8], activebackground=colours[0], disabledforeground=colours[0],
-                           state=DISABLED)
-        no_button.pack(side=LEFT)
-
-        home_button = Button(self, text="Home", font=big_button_font, command=home, bd=0, bg=colours[0], fg=colours[9],
-                             activeforeground=colours[10], activebackground=colours[0], disabledforeground=colours[0])
+        colours = ["black", '#00ff00', "green", "#0a0a0a", "#0a0a0c", "#0a0c0a", "#0c0a0a", "#ff001f"]
 
         buttons_container = Label(self, bg="black")
         buttons_container.pack(side=BOTTOM)

@@ -90,6 +90,7 @@ class MainPage(Frame):
             MainPage.integer = randint(11, 99)
             new_text = f"Square root of {MainPage.integer ** 2} is"
             number_display.config(text=new_text)
+            answer_input.config(bd=1)
             buttons_on()
             clear_button.config(text="Clear", command=clear)
             confirm_button.config(state=DISABLED)
@@ -132,12 +133,14 @@ class MainPage(Frame):
                 else:
                     new_text = f"Correct answer was {MainPage.integer}"
                     number_display.config(text=new_text)
+                    answer_input.config(bd=0)
                     buttons_off()
                     clear_button.config(text="Home", command=home, fg=colours[9], activeforeground=colours[8])
             else:
                 MainPage.integer = randint(11, 99)
                 new_text = f"Square root of {MainPage.integer ** 2} is"
                 number_display.config(text=new_text)
+                answer_input.config(bd=1)
                 buttons_on()
                 clear_button.config(text="Clear", command=clear, fg=colours[1], activeforeground=colours[2])
                 confirm_button.config(state=DISABLED)

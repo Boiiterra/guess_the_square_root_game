@@ -92,7 +92,7 @@ class MainPage(Frame):
             number_display.config(text=new_text)
             answer_input.config(bd=1)
             buttons_on()
-            clear_button.config(text="Clear", command=clear)
+            clear_button.config(text="Clear", command=clear, fg=colours[1], activeforeground=colours[2])
             confirm_button.config(state=DISABLED)
             answer_input.config(state=DISABLED)
 

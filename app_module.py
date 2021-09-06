@@ -1,5 +1,5 @@
 from tkinter import Tk, Frame, Label, Button, Entry
-from tkinter.constants import ACTIVE, TOP, BOTH, CENTER, DISABLED, NORMAL, END, BOTTOM
+from tkinter.constants import NORMAL, TOP, BOTH, CENTER, DISABLED, END, BOTTOM
 from random import randint
 
 
@@ -77,7 +77,7 @@ class MainPage(Frame):
             answer_input.config(state=NORMAL)
             answer_input.insert(END, str(number))
             answer_input.config(state=DISABLED)
-            confirm_button.config(state=ACTIVE)
+            confirm_button.config(state=NORMAL)
 
         def clear():
             answer_input.config(state=NORMAL)
@@ -97,16 +97,16 @@ class MainPage(Frame):
             answer_input.config(state=DISABLED)
 
         def buttons_on():
-            one.config(state=ACTIVE)
-            two.config(state=ACTIVE)
-            three.config(state=ACTIVE)
-            four.config(state=ACTIVE)
-            five.config(state=ACTIVE)
-            six.config(state=ACTIVE)
-            seven.config(state=ACTIVE)
-            eight.config(state=ACTIVE)
-            nine.config(state=ACTIVE)
-            zero.config(state=ACTIVE)
+            one.config(state=NORMAL)
+            two.config(state=NORMAL)
+            three.config(state=NORMAL)
+            four.config(state=NORMAL)
+            five.config(state=NORMAL)
+            six.config(state=NORMAL)
+            seven.config(state=NORMAL)
+            eight.config(state=NORMAL)
+            nine.config(state=NORMAL)
+            zero.config(state=NORMAL)
 
         def buttons_off():
             one.config(state=DISABLED)

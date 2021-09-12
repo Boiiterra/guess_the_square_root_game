@@ -58,9 +58,8 @@ class MainAppBody(Tk):
         Tk.__init__(self, *args, **kwargs)
         self.title("Guess the square root of random number")
         self.iconbitmap("icon.ico")
-        # self.geometry(f"{(self.winfo_screenwidth() // 2) + 500}x{(self.winfo_screenheight() // 2) + 200}")
-        self.geometry = ('800, 610')
-        self.minsize(1161, 600)
+        self.geometry(f"{(self.winfo_screenwidth() // 2) + 500}x{(self.winfo_screenheight() // 2) + 200}")
+        self.minsize(800, 600)
         self.maxsize(self.winfo_screenwidth(), self.winfo_screenheight())
 
         container = Frame(self)
@@ -102,18 +101,31 @@ class GreetingsPage(Frame):
         start_button = Button(self, text="Start", bg=num_bg, fg=fg, font=("Arial", 45),
                               activeforeground=active_fg, activebackground=bg, bd=0,
                               disabledforeground=bg, command=lambda: controller.show_frame(MainPage))
-        start_button.pack(fill=BOTH, pady=2)
+        start_button.pack(fill=BOTH, pady=2, expand=True)
 
         settings_button = Button(self, text="Settings", bg=num_bg, fg=home_btn_fg, font=("Arial", 45),
                                 activeforeground=home_btn_active_fg, activebackground=bg, bd=0,
                                 disabledforeground=bg, command=lambda: controller.show_frame(Settings_page))
-        settings_button.pack(fill=BOTH, side=BOTTOM)
+        settings_button.pack(fill=BOTH, side=BOTTOM, expand=True)
 
         def font_resize(e): 
             """Resizes font based on window height and width"""
-            # Based on height, with limiter as 1161 width
-            if e.width <= 1160:  # Resets button and entry font sizes to default
+            # based on width
+            if e.width <= 912:
+                txt_ssf = 30 # Main text small font
+                welcome_text.config(font=('Verdana', txt_ssf)) 
                 start_button.config(font=('Arial', 45))
+            elif e.width > 912 and e.width <= 1004:
+                txt_m = 36 # Main text medium font
+                welcome_text.config(font=("Verdana", txt_m)) 
+                start_button.config(font=('Arial', 45))
+            elif e.width > 1004 and e.width <= 1160:
+                txt_l = 40 # Main text large font
+                welcome_text.config(font=("Verdana", txt_l)) 
+                start_button.config(font=('Arial', 45))
+            elif e.width > 1160:
+                txt_d = 45  # Main text default font
+                welcome_text.config(font=('Verdana', txt_d))
                 settings_button.config(font=('Arial', 45))
             elif e.height <= 610 and e.width > 1160:
                 start_button.config(font=('Arial', 35))
@@ -136,21 +148,6 @@ class GreetingsPage(Frame):
             elif e.height > 807 and e.width > 1160:
                 start_button.config(font=('Arial', 95))
                 settings_button.config(font=('Arial', 95))
-            # based on width
-            if e.width <= 912:
-                txt_ssf = 30 # Main text small font
-                welcome_text.config(font=('Verdana', txt_ssf))
-            elif e.width > 912 and e.width <= 1004:
-                txt_m = 36 # Main text medium font
-                welcome_text.config(font=("Verdana", txt_m))
-            elif e.width > 1004 and e.width <= 1160:
-                txt_l = 40 # Main text large font
-                welcome_text.config(font=("Verdana", txt_l))
-            elif e.width > 1160:
-                txt_d = 45  # Main text default font
-                welcome_text.config(font=('Verdana', txt_d))
-
-
 
         self.bind("<Configure>", font_resize)
 
@@ -165,6 +162,7 @@ class MainPage(Frame):
 
     def __init__(self, parent, controller):
         Frame.__init__(self, parent, bg=bg)
+        self.controller = controller
 
         # print(self.winfo_screenheight())
 
@@ -326,7 +324,7 @@ class MainPage(Frame):
                                 bg=bg, fg=fg)
         confirm_button.grid(column=3, row=2, sticky="nsew")
 
-        def font_resize(e): 
+        def font_resize_main_page(e): 
             """Resizes font based on window height and width"""
             # Based on height, with limiter as 1161 width
             if e.width <= 1160:  # Resets button and entry font sizes to default
@@ -467,4 +465,4 @@ class MainPage(Frame):
                 number_display.config(font=('Verdana', txt_d))
 
 
-        self.bind("<Configure>", font_resize)
+        self.bind("<Configure>", font_resize_main_page)

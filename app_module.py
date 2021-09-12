@@ -96,7 +96,7 @@ class GreetingsPage(Frame):
                "\nPress start to continue."
 
         welcome_text = Label(self, text=text, font=("Verdana", 45), bg="#000000", fg=fg)
-        welcome_text.pack(expand=True, fill=BOTH)
+        welcome_text.pack(fill=BOTH, expand=True)
 
         start_button = Button(self, text="Start", bg=num_bg, fg=fg, font=("Arial", 45),
                               activeforeground=active_fg, activebackground=bg, bd=0,
@@ -112,21 +112,25 @@ class GreetingsPage(Frame):
             """Resizes font based on window height and width"""
             # based on width
             if e.width <= 912:
-                txt_ssf = 30 # Main text small font
-                welcome_text.config(font=('Verdana', txt_ssf)) 
+                welcome_text.config(font=('Verdana', 30))
+                settings_button.config(font=('Arial', 45))
                 start_button.config(font=('Arial', 45))
             elif e.width > 912 and e.width <= 1004:
-                txt_m = 36 # Main text medium font
-                welcome_text.config(font=("Verdana", txt_m)) 
+                welcome_text.config(font=("Verdana", 36))
+                settings_button.config(font=('Arial', 45))
                 start_button.config(font=('Arial', 45))
-            elif e.width > 1004 and e.width <= 1160:
-                txt_l = 40 # Main text large font
-                welcome_text.config(font=("Verdana", txt_l)) 
+            elif e.width > 1004 and e.width < 1160:
+                welcome_text.config(font=("Verdana", 40))
+                settings_button.config(font=('Arial', 45))
                 start_button.config(font=('Arial', 45))
             elif e.width > 1160:
-                txt_d = 45  # Main text default font
-                welcome_text.config(font=('Verdana', txt_d))
+                welcome_text.config(font=('Verdana', 45))
                 settings_button.config(font=('Arial', 45))
+                start_button.config(font=('Arial', 45))
+            if e.width == 1160:
+                welcome_text.config(font=("Verdana", 40))
+                settings_button.config(font=('Arial', 45))
+                start_button.config(font=('Arial', 45))
             elif e.height <= 610 and e.width > 1160:
                 start_button.config(font=('Arial', 35))
                 settings_button.config(font=('Arial', 35))
@@ -156,6 +160,8 @@ class Settings_page(Frame):
 
     def __init__(self, parent, controller):
         Frame.__init__(self, parent, bg=bg)
+
+        
 
 class MainPage(Frame):
     integer = None

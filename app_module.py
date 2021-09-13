@@ -466,18 +466,23 @@ class MainPage(Frame):
                 confirm_button.config(font=('Arial', btn_h))
             # based on width
             if e.width <= 830:
+                print('e.width <= 860 -> ', e.width)
                 txt_ssf = 51  # Main text smallest font
                 number_display.config(font=('Verdana', txt_ssf))
-            elif 830 < e.width <= 912:
+            elif 860 < e.width <= 935:
+                print('860 < e.width <= 935 -> ', e.width)
                 txt_sf = 55  # Main text small font
                 number_display.config(font=('Verdana', txt_sf))
-            elif 912 < e.width <= 940:
+            elif 935 < e.width <= 1010:
+                print('935 < e.width <= 1010 -> ', e.width)
                 txt_m = 61  # Main text medium font
                 number_display.config(font=("Verdana", txt_m))
-            elif 940 < e.width <= 1160:
+            elif 1010 < e.width <= 1160:
+                print('1010 < e.width <= 1160 -> ', e.width)
                 txt_l = 65  # Main text large font
                 number_display.config(font=("Verdana", txt_l))
             elif e.width > 1160:
+                print('e.width > 1160 -> ', e.width)
                 txt_d = 75  # Main text default font
                 number_display.config(font=('Verdana', txt_d))
 

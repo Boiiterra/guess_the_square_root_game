@@ -128,11 +128,8 @@ class GreetingsPage(Frame):
                 welcome_text.config(font=('Verdana', 45))
                 settings_button.config(font=('Arial', 45))
                 start_button.config(font=('Arial', 45))
-            if e.width == 1160:
-                welcome_text.config(font=("Verdana", 40))
-                settings_button.config(font=('Arial', 45))
-                start_button.config(font=('Arial', 45))
-            elif e.height <= 610 and e.width > 1160:
+            
+            if e.height <= 610 and e.width > 1160:
                 start_button.config(font=('Arial', 35))
                 settings_button.config(font=('Arial', 35))
             elif 610 < e.height <= 645 and e.width > 1160:
@@ -141,7 +138,7 @@ class GreetingsPage(Frame):
             elif 645 < e.height <= 700 and e.width > 1160:
                 start_button.config(font=('Arial', 55))
                 settings_button.config(font=('Arial', 55))
-            elif 700 < e.height <= 715 and e.width > 1160:
+            elif 700 < e.height <= 740 and e.width > 1160:
                 start_button.config(font=('Arial', 65))
                 settings_button.config(font=('Arial', 65))
             elif 740 < e.height <= 795 and e.width > 1160:
@@ -343,8 +340,23 @@ class MainPage(Frame):
 
         def font_resize_main_page(e):
             """Resizes font based on window height and width"""
-            # Based on height, with limiter as 1161 width
-            if e.width <= 1160:  # Resets button and entry font sizes to default
+            # Buttons + entry resize
+            if e.width <= 935:
+                btn_ssf1 = 45  # Button smallest font
+                answer_input.config(font=('Times New Roman', 55))
+                one.config(font=('Arial', btn_ssf1))
+                two.config(font=('Arial', btn_ssf1))
+                three.config(font=('Arial', btn_ssf1))
+                four.config(font=('Arial', btn_ssf1))
+                five.config(font=('Arial', btn_ssf1))
+                six.config(font=('Arial', btn_ssf1))
+                seven.config(font=('Arial', btn_ssf1))
+                eight.config(font=('Arial', btn_ssf1))
+                nine.config(font=('Arial', btn_ssf1))
+                zero.config(font=('Arial', btn_ssf1))
+                clear_button.config(font=('Arial', btn_ssf1))
+                confirm_button.config(font=('Arial', btn_ssf1))
+            elif 935 < e.width <= 1160:  # Resets button and entry font sizes to default
                 btn_dm = 50  # Button default font (method variable)
                 answer_input.config(font=('Times New Roman', 55))
                 one.config(font=('Arial', btn_dm))
@@ -464,25 +476,20 @@ class MainPage(Frame):
                 zero.config(font=('Arial', btn_h))
                 clear_button.config(font=('Arial', btn_h))
                 confirm_button.config(font=('Arial', btn_h))
-            # based on width
+            # Main text resize
             if e.width <= 830:
-                print('e.width <= 860 -> ', e.width)
                 txt_ssf = 51  # Main text smallest font
                 number_display.config(font=('Verdana', txt_ssf))
             elif 860 < e.width <= 935:
-                print('860 < e.width <= 935 -> ', e.width)
                 txt_sf = 55  # Main text small font
                 number_display.config(font=('Verdana', txt_sf))
             elif 935 < e.width <= 1010:
-                print('935 < e.width <= 1010 -> ', e.width)
                 txt_m = 61  # Main text medium font
                 number_display.config(font=("Verdana", txt_m))
             elif 1010 < e.width <= 1160:
-                print('1010 < e.width <= 1160 -> ', e.width)
                 txt_l = 65  # Main text large font
                 number_display.config(font=("Verdana", txt_l))
             elif e.width > 1160:
-                print('e.width > 1160 -> ', e.width)
                 txt_d = 75  # Main text default font
                 number_display.config(font=('Verdana', txt_d))
 

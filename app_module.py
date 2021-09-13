@@ -5,24 +5,25 @@ from configparser import ConfigParser
 
 
 def colors_reset():
-    parser = ConfigParser()
+    global parser
     parser.read("colors.txt")
-    parser.get("colors", "background", "#000000")
-    parser.get("colors", "foreground", "#00ff00")
-    parser.get("colors", "active_foreground", "#008000")
-    parser.get("colors", "home_btn_fore", "#0000FF")
-    parser.get("colors", "home_bts_active_fore", "#00008B")
-    parser.get("colors", "main_btn_fore", "#00ff00")
-    parser.get("colors", "main_btn_back", "#000000")
-    parser.get("colors", "main_btn_active_fore", "#008000")
-    parser.get("colors", "num_btn_back", "#0a0a0a")
-    parser.get("colors", "num_btn_fore", "#00ff00")
-    parser.get("colors", "num_btn_active_fore", "#008000")
+    parser.set("colors", "background", "#000000")
+    parser.set("colors", "foreground", "#00ff00")
+    parser.set("colors", "active_foreground", "#008000")
+    parser.set("colors", "home_btn_fore", "#0000FF")
+    parser.set("colors", "home_bts_active_fore", "#00008B")
+    parser.set("colors", "main_btn_fore", "#00ff00")
+    parser.set("colors", "main_btn_back", "#000000")
+    parser.set("colors", "main_btn_active_fore", "#008000")
+    parser.set("colors", "num_btn_back", "#0a0a0a")
+    parser.set("colors", "num_btn_fore", "#00ff00")
+    parser.set("colors", "num_btn_active_fore", "#008000")
     with open("colors.txt", 'w') as configfile:
         parser.write(configfile)
     # Reset the colors 
     # parser.read("colors.txt")
-    global bg, fg, active_fg, home_btn_fg, home_btn_active_fg, main_btn_fg, main_btn_bg, main_btn_active_fg, num_bg, num_fg, num_active_fg
+    global bg, fg, active_fg, home_btn_fg, home_btn_active_fg, main_btn_fg, \
+        main_btn_bg, main_btn_active_fg, num_bg, num_fg, num_active_fg
     bg = parser.get("colors", "background")
     fg = parser.get("colors", "foreground")
     active_fg = parser.get("colors", "active_foreground")
@@ -70,7 +71,7 @@ class MainAppBody(Tk):
 
         self.frames = {}
 
-        frame_collection = (GreetingsPage, MainPage, Settings_page)
+        frame_collection = (GreetingsPage, MainPage, SettingsPage)
 
         for current_frame in frame_collection:
             frame = current_frame(container, self)
@@ -95,7 +96,7 @@ class GreetingsPage(Frame):
                "numbers starts at 11 and ends at 99.\n" \
                "\nPress start to continue."
 
-        welcome_text = Label(self, text=text, font=("Verdana", 45), bg="#000000", fg=fg)
+        welcome_text = Label(self, text=text, font=("Verdana", 45), bg=bg, fg=fg)
         welcome_text.pack(fill=BOTH, expand=True)
 
         start_button = Button(self, text="Start", bg=num_bg, fg=fg, font=("Arial", 45),
@@ -104,22 +105,22 @@ class GreetingsPage(Frame):
         start_button.pack(fill=BOTH, pady=2, expand=True)
 
         settings_button = Button(self, text="Settings", bg=num_bg, fg=home_btn_fg, font=("Arial", 45),
-                                activeforeground=home_btn_active_fg, activebackground=bg, bd=0,
-                                disabledforeground=bg, command=lambda: controller.show_frame(Settings_page))
+                                 activeforeground=home_btn_active_fg, activebackground=bg, bd=0,
+                                 disabledforeground=bg, command=lambda: controller.show_frame(SettingsPage))
         settings_button.pack(fill=BOTH, side=BOTTOM, expand=True)
 
-        def font_resize(e): 
+        def font_resize(e):
             """Resizes font based on window height and width"""
             # based on width
             if e.width <= 912:
                 welcome_text.config(font=('Verdana', 30))
                 settings_button.config(font=('Arial', 45))
                 start_button.config(font=('Arial', 45))
-            elif e.width > 912 and e.width <= 1004:
+            elif 912 < e.width <= 1004:
                 welcome_text.config(font=("Verdana", 36))
                 settings_button.config(font=('Arial', 45))
                 start_button.config(font=('Arial', 45))
-            elif e.width > 1004 and e.width < 1160:
+            elif 1004 < e.width < 1160:
                 welcome_text.config(font=("Verdana", 40))
                 settings_button.config(font=('Arial', 45))
                 start_button.config(font=('Arial', 45))
@@ -134,19 +135,19 @@ class GreetingsPage(Frame):
             elif e.height <= 610 and e.width > 1160:
                 start_button.config(font=('Arial', 35))
                 settings_button.config(font=('Arial', 35))
-            elif e.height > 610 and e.height <= 645 and e.width > 1160:
+            elif 610 < e.height <= 645 and e.width > 1160:
                 start_button.config(font=('Arial', 45))
                 settings_button.config(font=('Arial', 45))
-            elif e.height > 645 and e.height <= 700 and e.width > 1160:
+            elif 645 < e.height <= 700 and e.width > 1160:
                 start_button.config(font=('Arial', 55))
                 settings_button.config(font=('Arial', 55))
-            elif e.height > 700 and e.height <= 715 and e.width > 1160:
+            elif 700 < e.height <= 715 and e.width > 1160:
                 start_button.config(font=('Arial', 65))
                 settings_button.config(font=('Arial', 65))
-            elif e.height > 740 and e.height <= 795 and e.width > 1160:
+            elif 740 < e.height <= 795 and e.width > 1160:
                 start_button.config(font=('Arial', 75))
                 settings_button.config(font=('Arial', 75))
-            elif e.height > 795 and e.height <= 807 and e.width > 1160:
+            elif 795 < e.height <= 807 and e.width > 1160:
                 start_button.config(font=('Arial', 85))
                 settings_button.config(font=('Arial', 85))
             elif e.height > 807 and e.width > 1160:
@@ -156,12 +157,21 @@ class GreetingsPage(Frame):
         self.bind("<Configure>", font_resize)
 
 
-class Settings_page(Frame):
+class SettingsPage(Frame):
 
     def __init__(self, parent, controller):
         Frame.__init__(self, parent, bg=bg)
 
-        
+        settings_button = Button(self, text="Home", bg=num_bg, fg=home_btn_fg, font=("Arial", 45),
+                                 activeforeground=home_btn_active_fg, activebackground=bg, bd=0,
+                                 disabledforeground=bg, command=lambda: controller.show_frame(GreetingsPage))
+        settings_button.pack(fill=BOTH, side=BOTTOM, expand=True)
+
+        def font_resize_settings(e):
+            pass
+
+        self.bind("<Configure>", font_resize_settings)
+
 
 class MainPage(Frame):
     integer = None
@@ -176,7 +186,7 @@ class MainPage(Frame):
 
         text = f"Square root of {MainPage.integer ** 2} is"
 
-        number_display = Label(self, text=text, font=("Verdana", 75), bg="#000000", fg=fg)
+        number_display = Label(self, text=text, font=("Verdana", 75), bg=bg, fg=fg)
         number_display.pack(expand=True)
 
         answer_input = Entry(self, justify=CENTER, font=("Times New Roman", 55), bg=bg, fg=fg,
@@ -325,29 +335,30 @@ class MainPage(Frame):
                               bg=bg, fg=fg)
         clear_button.grid(column=3, row=1, sticky="nsew")
 
-        confirm_button = Button(buttons_container, text="Confirm", font=("Arial", btn_d), command=confirm, state=DISABLED,
+        confirm_button = Button(buttons_container, text="Confirm", font=("Arial", btn_d), command=confirm,
+                                state=DISABLED,
                                 activeforeground=active_fg, activebackground=bg, disabledforeground=bg,
                                 bg=bg, fg=fg)
         confirm_button.grid(column=3, row=2, sticky="nsew")
 
-        def font_resize_main_page(e): 
+        def font_resize_main_page(e):
             """Resizes font based on window height and width"""
             # Based on height, with limiter as 1161 width
             if e.width <= 1160:  # Resets button and entry font sizes to default
-                btn_d = 50  # Button default font
+                btn_dm = 50  # Button default font (method variable)
                 answer_input.config(font=('Times New Roman', 55))
-                one.config(font=('Arial', btn_d))
-                two.config(font=('Arial', btn_d))
-                three.config(font=('Arial', btn_d))
-                four.config(font=('Arial', btn_d))
-                five.config(font=('Arial', btn_d))
-                six.config(font=('Arial', btn_d))
-                seven.config(font=('Arial', btn_d))
-                eight.config(font=('Arial', btn_d))
-                nine.config(font=('Arial', btn_d))
-                zero.config(font=('Arial', btn_d))
-                clear_button.config(font=('Arial', btn_d))
-                confirm_button.config(font=('Arial', btn_d))
+                one.config(font=('Arial', btn_dm))
+                two.config(font=('Arial', btn_dm))
+                three.config(font=('Arial', btn_dm))
+                four.config(font=('Arial', btn_dm))
+                five.config(font=('Arial', btn_dm))
+                six.config(font=('Arial', btn_dm))
+                seven.config(font=('Arial', btn_dm))
+                eight.config(font=('Arial', btn_dm))
+                nine.config(font=('Arial', btn_dm))
+                zero.config(font=('Arial', btn_dm))
+                clear_button.config(font=('Arial', btn_dm))
+                confirm_button.config(font=('Arial', btn_dm))
             elif e.height <= 610 and e.width > 1160:
                 btn_ssf = 45  # Button smallest font
                 answer_input.config(font=('Times New Roman', 55))
@@ -363,22 +374,22 @@ class MainPage(Frame):
                 zero.config(font=('Arial', btn_ssf))
                 clear_button.config(font=('Arial', btn_ssf))
                 confirm_button.config(font=('Arial', btn_ssf))
-            elif e.height > 610 and e.height <= 645 and e.width > 1160:
-                btn_d = 50  # Button default font
+            elif 610 < e.height <= 645 and e.width > 1160:
+                btn_dm = 50  # Button default font
                 answer_input.config(font=('Times New Roman', 55))
-                one.config(font=('Arial', btn_d))
-                two.config(font=('Arial', btn_d))
-                three.config(font=('Arial', btn_d))
-                four.config(font=('Arial', btn_d))
-                five.config(font=('Arial', btn_d))
-                six.config(font=('Arial', btn_d))
-                seven.config(font=('Arial', btn_d))
-                eight.config(font=('Arial', btn_d))
-                nine.config(font=('Arial', btn_d))
-                zero.config(font=('Arial', btn_d))
-                clear_button.config(font=('Arial', btn_d))
-                confirm_button.config(font=('Arial', btn_d))
-            elif e.height > 645 and e.height <= 700 and e.width > 1160:
+                one.config(font=('Arial', btn_dm))
+                two.config(font=('Arial', btn_dm))
+                three.config(font=('Arial', btn_dm))
+                four.config(font=('Arial', btn_dm))
+                five.config(font=('Arial', btn_dm))
+                six.config(font=('Arial', btn_dm))
+                seven.config(font=('Arial', btn_dm))
+                eight.config(font=('Arial', btn_dm))
+                nine.config(font=('Arial', btn_dm))
+                zero.config(font=('Arial', btn_dm))
+                clear_button.config(font=('Arial', btn_dm))
+                confirm_button.config(font=('Arial', btn_dm))
+            elif 645 < e.height <= 700 and e.width > 1160:
                 btn_m = 55  # Button medium font
                 answer_input.config(font=('Times New Roman', 60))
                 one.config(font=('Arial', btn_m))
@@ -393,7 +404,7 @@ class MainPage(Frame):
                 zero.config(font=('Arial', btn_m))
                 clear_button.config(font=('Arial', btn_m))
                 confirm_button.config(font=('Arial', btn_m))
-            elif e.height > 700 and e.height <= 715 and e.width > 1160:
+            elif 700 < e.height <= 715 and e.width > 1160:
                 btn_l = 60  # Button large font
                 answer_input.config(font=('Times New Roman', 60))
                 one.config(font=('Arial', btn_l))
@@ -408,7 +419,7 @@ class MainPage(Frame):
                 zero.config(font=('Arial', btn_l))
                 clear_button.config(font=('Arial', btn_l))
                 confirm_button.config(font=('Arial', btn_l))
-            elif e.height > 740 and e.height <= 795 and e.width > 1160:
+            elif 740 < e.height <= 795 and e.width > 1160:
                 btn_h = 65  # Button huge font
                 answer_input.config(font=('Times New Roman', 60))
                 one.config(font=('Arial', btn_h))
@@ -423,7 +434,7 @@ class MainPage(Frame):
                 zero.config(font=('Arial', btn_h))
                 clear_button.config(font=('Arial', btn_h))
                 confirm_button.config(font=('Arial', btn_h))
-            elif e.height > 795 and e.height <= 807 and e.width > 1160:
+            elif 795 < e.height <= 807 and e.width > 1160:
                 btn_h = 65  # Button huge font
                 answer_input.config(font=('Times New Roman', 66))
                 one.config(font=('Arial', btn_h))
@@ -457,18 +468,17 @@ class MainPage(Frame):
             if e.width <= 830:
                 txt_ssf = 51  # Main text smallest font
                 number_display.config(font=('Verdana', txt_ssf))
-            elif e.width > 830 and e.width <= 912:
+            elif 830 < e.width <= 912:
                 txt_sf = 55  # Main text small font
                 number_display.config(font=('Verdana', txt_sf))
-            elif e.width > 912 and e.width <= 940:
+            elif 912 < e.width <= 940:
                 txt_m = 61  # Main text medium font
                 number_display.config(font=("Verdana", txt_m))
-            elif e.width > 940 and e.width <= 1160:
+            elif 940 < e.width <= 1160:
                 txt_l = 65  # Main text large font
                 number_display.config(font=("Verdana", txt_l))
             elif e.width > 1160:
                 txt_d = 75  # Main text default font
                 number_display.config(font=('Verdana', txt_d))
-
 
         self.bind("<Configure>", font_resize_main_page)

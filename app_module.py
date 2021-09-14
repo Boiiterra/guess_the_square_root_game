@@ -128,7 +128,7 @@ class GreetingsPage(Frame):
                 welcome_text.config(font=('Verdana', 45))
                 settings_button.config(font=('Arial', 45))
                 start_button.config(font=('Arial', 45))
-            
+
             if e.height <= 610 and e.width > 1160:
                 start_button.config(font=('Arial', 35))
                 settings_button.config(font=('Arial', 35))
@@ -159,13 +159,204 @@ class SettingsPage(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent, bg=bg)
 
-        settings_button = Button(self, text="Home", bg=num_bg, fg=home_btn_fg, font=("Arial", 45),
-                                 activeforeground=home_btn_active_fg, activebackground=bg, bd=0,
-                                 disabledforeground=bg, command=lambda: controller.show_frame(GreetingsPage))
-        settings_button.pack(fill=BOTH, side=BOTTOM, expand=True)
+        examples_container = Label(self, bg=bg)
+        examples_container.pack(side=TOP, anchor='n')
+
+        Grid.rowconfigure(examples_container, 0, weight=1)
+
+        Grid.columnconfigure(examples_container, 0, weight=1)
+        Grid.columnconfigure(examples_container, 1, weight=1)
+        Grid.columnconfigure(examples_container, 2, weight=1)
+
+        example_text = Entry(examples_container, justify=CENTER, font=("Times New Roman", 55), bg=bg, fg=fg,
+                             disabledbackground=bg, width=11, bd=1, disabledforeground=fg,
+                             cursor="arrow", state=DISABLED)
+        example_text.grid(row=0, column=0, sticky="nsew")
+
+        example_text.config(state=NORMAL)
+        example_text.insert(0, 'text example')
+        example_text.config(state=DISABLED)
+
+        example_button1 = Button(examples_container, text="Example", bg=num_bg, fg=fg, font=("Times New Roman", 55),
+                                 activeforeground=active_fg, activebackground=bg, bd=0,
+                                 disabledforeground=bg)
+        example_button1.grid(row=0, column=1, sticky='nsew')
+
+        example_button2 = Button(examples_container, text="Example", bg=bg, fg=fg, font=("Times New Roman", 55),
+                                 activeforeground=active_fg, activebackground=bg, bd=0,
+                                 disabledforeground=bg)
+        example_button2.grid(row=0, column=2, sticky='nsew')
+
+        container = Label(self, bg=bg)
+        container.pack(side=TOP, anchor='n', expand=True, pady=3)
+
+        Grid.rowconfigure(container, 0, weight=1)
+        Grid.rowconfigure(container, 1, weight=1)
+        Grid.rowconfigure(container, 2, weight=1)
+        Grid.columnconfigure(container, 0, weight=1)
+        Grid.columnconfigure(container, 1, weight=1)
+        Grid.columnconfigure(container, 2, weight=1)
+        Grid.columnconfigure(container, 3, weight=1)
+        Grid.columnconfigure(container, 4, weight=1)
+
+        btn_d = 35
+        info1 = Button(container, text="change", font=("Arial", btn_d), bg=bg, fg=fg, state=DISABLED,
+                       disabledforeground=fg, bd=0)
+        info1.grid(column=0, row=0, sticky="nsew")
+
+        info2 = Button(container, text="colors", font=("Arial", btn_d), bg=bg, fg=fg, state=DISABLED,
+                       disabledforeground=fg, bd=0)
+        info2.grid(column=0, row=1, sticky="nsew")
+
+        info3 = Button(container, text="for:", font=("Arial", btn_d), bg=bg, fg=fg, state=DISABLED,
+                       disabledforeground=fg, bd=0)
+        info3.grid(column=0, row=2, sticky="nsew")
+
+        win_back = Button(container, text="main bg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
+                          activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+                          bg=num_bg, fg=fg)
+        win_back.grid(column=1, row=2, sticky="nsew")
+
+        win_fore = Button(container, text="main fg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
+                          activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+                          bg=num_bg, fg=fg)
+        win_fore.grid(column=2, row=2, sticky="nsew")
+
+        win_active_fore = Button(container, text="active fg", font=("Arial", btn_d), bg=num_bg, fg=fg,
+                                 command=lambda: print('You pressed me!'),
+                                 activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg)
+        win_active_fore.grid(column=3, row=2, sticky="nsew")
+
+        home_fg = Button(container, text="special fg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
+                         activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+                         bg=num_bg, fg=fg)
+        home_fg.grid(column=1, row=1, sticky="nsew")
+
+        home_bg = Button(container, text="special bg", font=("special bg", btn_d), bg=num_bg, fg=fg,
+                         command=lambda: print('You pressed me!'),
+                         activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg)
+        home_bg.grid(column=2, row=1, sticky="nsew")
+
+        home_active_fg = Button(container, text="special afg", font=("Arial", btn_d), bg=num_bg, fg=fg,
+                                command=lambda: print('You pressed me!'),
+                                activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg)
+        home_active_fg.grid(column=3, row=1, sticky="nsew")
+
+        main_fg = Button(container, text="btn fg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
+                         activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+                         bg=num_bg, fg=fg)
+        main_fg.grid(column=1, row=0, sticky="nsew")
+
+        main_bg = Button(container, text="btn bg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
+                         activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+                         bg=num_bg, fg=fg)
+        main_bg.grid(column=2, row=0, sticky="nsew")
+
+        main_active_fg = Button(container, text="button afg", font=("Arial", btn_d), bg=num_bg, fg=fg,
+                                command=lambda: print('You pressed me!'),
+                                activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg)
+        main_active_fg.grid(column=3, row=0, sticky="nsew")
+
+        num_btn_fg = Button(container, text="num fg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
+                            activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+                            bg=num_bg, fg=fg)
+        num_btn_fg.grid(column=4, row=0, sticky="nsew")
+
+        num_btn_bg = Button(container, text="num bg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
+                            activeforeground=active_fg, activebackground=bg, disabledforeground=bg, bg=bg, fg=fg)
+        num_btn_bg.grid(column=4, row=1, sticky="nsew")
+
+        num_afg = Button(container, text="num afg", font=("Arial", btn_d),
+                         command=lambda: print('You pressed me!'),
+                         activeforeground=active_fg, activebackground=bg, disabledforeground=bg,
+                         bg=bg, fg=fg)
+        num_afg.grid(column=4, row=2, sticky="nsew")
+
+        home_button = Button(self, text="Home", bg=num_bg, fg=home_btn_fg, font=("Arial", 45),
+                             activeforeground=home_btn_active_fg, activebackground=bg, bd=0,
+                             disabledforeground=bg, command=lambda: controller.show_frame(GreetingsPage))
+        home_button.pack(fill=BOTH, side=BOTTOM, expand=True)
 
         def font_resize_settings(e):
-            pass
+            """Resizes font based on window height and width"""
+            if 912 < e.width <= 935:
+                btn_ssf2 = 22  # Button smallest font
+                info1.config(font=('Arial', btn_ssf2))
+                info2.config(font=('Arial', btn_ssf2))
+                info3.config(font=('Arial', btn_ssf2))
+                win_back.config(font=('Arial', btn_ssf2))
+                win_fore.config(font=('Arial', btn_ssf2))
+                win_active_fore.config(font=('Arial', btn_ssf2))
+                home_fg.config(font=('Arial', btn_ssf2))
+                home_bg.config(font=('Arial', btn_ssf2))
+                home_active_fg.config(font=('Arial', btn_ssf2))
+                main_fg.config(font=('Arial', btn_ssf2))
+                main_bg.config(font=('Arial', btn_ssf2))
+                main_active_fg.config(font=('Arial', btn_ssf2))
+                num_btn_fg.config(font=('Arial', btn_ssf2))
+                num_btn_bg.config(font=('Arial', btn_ssf2))
+                num_afg.config(font=('Arial', btn_ssf2))
+            elif 935 < e.width <= 1160:  # Resets button and entry font sizes to default
+                btn_dm = 25  # Button permanent default font (method variable)
+                info1.config(font=('Arial', btn_dm))
+                info2.config(font=('Arial', btn_dm))
+                info3.config(font=('Arial', btn_dm))
+                win_back.config(font=('Arial', btn_dm))
+                win_fore.config(font=('Arial', btn_dm))
+                win_active_fore.config(font=('Arial', btn_dm))
+                home_fg.config(font=('Arial', btn_dm))
+                home_bg.config(font=('Arial', btn_dm))
+                home_active_fg.config(font=('Arial', btn_dm))
+                main_fg.config(font=('Arial', btn_dm))
+                main_bg.config(font=('Arial', btn_dm))
+                main_active_fg.config(font=('Arial', btn_dm))
+                num_btn_fg.config(font=('Arial', btn_dm))
+                num_btn_bg.config(font=('Arial', btn_dm))
+                num_afg.config(font=('Arial', btn_dm))
+            elif e.height <= 610 and e.width > 1160:
+                btn_ssf = 30  # Button smallest font
+                win_back.config(font=('Arial', btn_ssf))
+                win_fore.config(font=('Arial', btn_ssf))
+                win_active_fore.config(font=('Arial', btn_ssf))
+                home_fg.config(font=('Arial', btn_ssf))
+                home_bg.config(font=('Arial', btn_ssf))
+                home_active_fg.config(font=('Arial', btn_ssf))
+                main_fg.config(font=('Arial', btn_ssf))
+                main_bg.config(font=('Arial', btn_ssf))
+                main_active_fg.config(font=('Arial', btn_ssf))
+                num_btn_fg.config(font=('Arial', btn_ssf))
+                num_btn_bg.config(font=('Arial', btn_ssf))
+                num_afg.config(font=('Arial', btn_ssf))
+            elif 610 < e.height <= 700 and e.width > 1160:
+                btn_dm1 = 35  # Button default font
+                win_back.config(font=('Arial', btn_dm1))
+                win_fore.config(font=('Arial', btn_dm1))
+                win_active_fore.config(font=('Arial', btn_dm1))
+                home_fg.config(font=('Arial', btn_dm1))
+                home_bg.config(font=('Arial', btn_dm1))
+                home_active_fg.config(font=('Arial', btn_dm1))
+                main_fg.config(font=('Arial', btn_dm1))
+                main_bg.config(font=('Arial', btn_dm1))
+                main_active_fg.config(font=('Arial', btn_dm1))
+                num_btn_fg.config(font=('Arial', btn_dm1))
+                num_btn_bg.config(font=('Arial', btn_dm1))
+                num_afg.config(font=('Arial', btn_dm1))
+            # Change font for home button
+            if e.width <= 912:
+                home_button.config(font=('Arial', 45))
+                example_text.config(font=('Times New Roman', 42))
+                example_button1.config(font=('Times New Roman', 42))
+                example_button2.config(font=('Times New Roman', 42))
+            elif 912 < e.width <= 1160:
+                home_button.config(font=('Arial', 55))
+                example_text.config(font=('Times New Roman', 50))
+                example_button1.config(font=('Times New Roman', 50))
+                example_button2.config(font=('Times New Roman', 50))
+            elif e.width > 1160:
+                home_button.config(font=('Arial', 55))
+                example_text.config(font=('Times New Roman', 55))
+                example_button1.config(font=('Times New Roman', 55))
+                example_button2.config(font=('Times New Roman', 55))
 
         self.bind("<Configure>", font_resize_settings)
 
@@ -196,12 +387,14 @@ class MainPage(Frame):
             answer_input.insert(END, str(number))
             answer_input.config(state=DISABLED)
             confirm_button.config(state=NORMAL)
+            clear_button.config(state=NORMAL)
 
         def clear():
             answer_input.config(state=NORMAL)
             answer_input.delete(0, END)
             answer_input.config(state=DISABLED)
             confirm_button.config(state=DISABLED)
+            clear_button.config(state=DISABLED)
 
         def home():
             controller.show_frame(GreetingsPage)
@@ -210,7 +403,7 @@ class MainPage(Frame):
             number_display.config(text=new_text)
             answer_input.config(bd=1)
             buttons_on()
-            clear_button.config(text="Clear", command=clear, fg=fg, activeforeground=active_fg)
+            clear_button.config(text="Clear", command=clear, fg=fg, activeforeground=active_fg, state=DISABLED)
             confirm_button.config(state=DISABLED)
             answer_input.config(state=DISABLED)
 
@@ -262,6 +455,7 @@ class MainPage(Frame):
                 buttons_on()
                 clear_button.config(text="Clear", command=clear, fg=fg, activeforeground=active_fg)
                 confirm_button.config(state=DISABLED)
+                clear_button.config(state=DISABLED)
             answer_input.delete(0, END)
             answer_input.config(state=DISABLED)
 
@@ -274,6 +468,7 @@ class MainPage(Frame):
         Grid.columnconfigure(buttons_container, 0, weight=1)
         Grid.columnconfigure(buttons_container, 1, weight=1)
         Grid.columnconfigure(buttons_container, 2, weight=1)
+        Grid.columnconfigure(buttons_container, 3, weight=1)
 
         btn_d = 50
 
@@ -329,7 +524,7 @@ class MainPage(Frame):
 
         clear_button = Button(buttons_container, text="Clear", font=("Arial", btn_d), command=clear,
                               activeforeground=active_fg, activebackground=bg, disabledforeground=bg,
-                              bg=bg, fg=fg)
+                              bg=bg, fg=fg, state=DISABLED)
         clear_button.grid(column=3, row=1, sticky="nsew")
 
         confirm_button = Button(buttons_container, text="Confirm", font=("Arial", btn_d), command=confirm,

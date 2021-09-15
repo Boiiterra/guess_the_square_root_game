@@ -1,56 +1,63 @@
-from tkinter import Tk, Frame, Label, Button, Entry, Grid
-from tkinter.constants import NORMAL, TOP, BOTH, CENTER, DISABLED, END, BOTTOM
+from tkinter import Tk, Frame, Label, Button, Entry, Grid, Toplevel
+from tkinter.constants import NORMAL, SE, TOP, BOTH, CENTER, DISABLED, END, BOTTOM, LEFT, SOLID
 from random import randint
-from configparser import ConfigParser
+
+# Default colors
+bg = "#000000"
+fg = "#00ff00"
+active_fg = "#008000"
+home_btn_fg = "#0000FF"
+home_btn_active_fg = "#00008B"
+main_btn_fg = "#00ff00"
+main_btn_bg = "#000000"
+num_bg = "#0a0a0a"
+num_fg = "#00ff00"
+num_active_fg = "#008000"
 
 
-def colors_reset():
-    global parser
-    parser.read("colors.txt")
-    parser.set("colors", "background", "#000000")
-    parser.set("colors", "foreground", "#00ff00")
-    parser.set("colors", "active_foreground", "#008000")
-    parser.set("colors", "home_btn_fore", "#0000FF")
-    parser.set("colors", "home_bts_active_fore", "#00008B")
-    parser.set("colors", "main_btn_fore", "#00ff00")
-    parser.set("colors", "main_btn_back", "#000000")
-    parser.set("colors", "main_btn_active_fore", "#008000")
-    parser.set("colors", "num_btn_back", "#0a0a0a")
-    parser.set("colors", "num_btn_fore", "#00ff00")
-    parser.set("colors", "num_btn_active_fore", "#008000")
-    with open("colors.txt", 'w') as configfile:
-        parser.write(configfile)
-    # Reset the colors 
-    # parser.read("colors.txt")
-    global bg, fg, active_fg, home_btn_fg, home_btn_active_fg, main_btn_fg, \
-        main_btn_bg, main_btn_active_fg, num_bg, num_fg, num_active_fg
-    bg = parser.get("colors", "background")
-    fg = parser.get("colors", "foreground")
-    active_fg = parser.get("colors", "active_foreground")
-    home_btn_fg = parser.get("colors", "home_btn_fore")
-    home_btn_active_fg = parser.get("colors", "home_bts_active_fore")
-    main_btn_fg = parser.get("colors", "main_btn_fore")
-    main_btn_bg = parser.get("colors", "main_btn_back")
-    main_btn_active_fg = parser.get("colors", "main_btn_active_fore")
-    num_bg = parser.get("colors", "num_btn_back")
-    num_fg = parser.get("colors", "num_btn_fore")
-    num_active_fg = parser.get("colors", "num_btn_active_fore")
+def neon_theme_colors():
+    global bg, fg, active_fg, home_btn_fg, home_btn_active_fg, main_btn_fg, main_btn_bg, num_active_fg, num_bg, num_fg
+    bg = "#000000"
+    fg = "#00ff00"
+    active_fg = "#008000"
+    home_btn_fg = "#0000FF"
+    home_btn_active_fg = "#00008B"
+    main_btn_fg = "#00ff00"
+    main_btn_bg = "#000000"
+    num_bg = "#0a0a0a"
+    num_fg = "#00ff00"
+    num_active_fg = "#008000"
+    with open("themes.txt", 'r+') as file:
+        file.write('neon')
+    file.close
 
 
-# Color section
-parser = ConfigParser()
-parser.read("colors.txt")
-bg = parser.get("colors", "background")
-fg = parser.get("colors", "foreground")
-active_fg = parser.get("colors", "active_foreground")
-home_btn_fg = parser.get("colors", "home_btn_fore")
-home_btn_active_fg = parser.get("colors", "home_bts_active_fore")
-main_btn_fg = parser.get("colors", "main_btn_fore")
-main_btn_bg = parser.get("colors", "main_btn_back")
-main_btn_active_fg = parser.get("colors", "main_btn_active_fore")
-num_bg = parser.get("colors", "num_btn_back")
-num_fg = parser.get("colors", "num_btn_fore")
-num_active_fg = parser.get("colors", "num_btn_active_fore")
+def dark_theme_colors():
+    global bg, fg, active_fg, home_btn_fg, home_btn_active_fg, main_btn_fg, main_btn_bg, num_active_fg, num_bg, num_fg
+    bg = "#000000"
+    fg = "#ffffff"
+    active_fg = "#dbdbdb"
+    home_btn_fg = "#f2f2f2"
+    home_btn_active_fg = "#bababa"
+    main_btn_fg = "#ffffff"
+    main_btn_bg = "#000000"
+    num_bg = "#0a0a0a"
+    num_fg = "#ffffff"
+    num_active_fg = "#dbdbdb"
+
+
+def light_theme_colors():
+    global bg, fg, active_fg, home_btn_fg, home_btn_active_fg, main_btn_fg, main_btn_bg, num_active_fg, num_bg, num_fg
+    bg = "#ffffff"
+    fg = "#000000"
+    active_fg = "#dbdbdb"
+    home_btn_fg = "#f2f2f2"
+    home_btn_active_fg = "#000000"
+    main_btn_fg = "#292929"
+    main_btn_bg = "#ffffff"
+    num_bg = "#999999"
+    num_fg = "#292929"
+    num_active_fg = "#000000"
 
 
 class MainAppBody(Tk):
@@ -85,280 +92,178 @@ class MainAppBody(Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
+    
+    def get_page(self, page_class):
+        return self.frames[page_class]
+
 
 class GreetingsPage(Frame):
 
     def __init__(self, parent, controller):
         Frame.__init__(self, parent, bg=bg)
+        self.controller = controller
 
         text = "Welcome to 'guess the square root\n" \
                "of random number' game. Range of\n" \
                "numbers starts at 11 and ends at 99.\n" \
                "\nPress start to continue."
 
-        welcome_text = Label(self, text=text, font=("Verdana", 45), bg=bg, fg=fg)
-        welcome_text.pack(fill=BOTH, expand=True)
+        self.welcome_text = Label(self, text=text, font=("Verdana", 45), bg=bg, fg=fg)
+        self.welcome_text.pack(fill=BOTH, expand=True)
 
-        start_button = Button(self, text="Start", bg=num_bg, fg=fg, font=("Arial", 45),
+        self.start_button = Button(self, text="Start", bg=num_bg, fg=fg, font=("Arial", 45),
                               activeforeground=active_fg, activebackground=bg, bd=0,
                               disabledforeground=bg, command=lambda: controller.show_frame(MainPage))
-        start_button.pack(fill=BOTH, pady=2, expand=True)
+        self.start_button.pack(fill=BOTH, pady=2, expand=True)
 
-        settings_button = Button(self, text="Settings", bg=num_bg, fg=home_btn_fg, font=("Arial", 45),
+        self.settings_button = Button(self, text="Settings", bg=num_bg, fg=home_btn_fg, font=("Arial", 45),
                                  activeforeground=home_btn_active_fg, activebackground=bg, bd=0,
                                  disabledforeground=bg, command=lambda: controller.show_frame(SettingsPage))
-        settings_button.pack(fill=BOTH, side=BOTTOM, expand=True)
+        self.settings_button.pack(fill=BOTH, side=BOTTOM, expand=True)
 
         def font_resize(e):
-            """Resizes font based on window height and width"""
-            # based on width
+            """Resizes font based on window's height and width"""
+            # Text resize and buttons minimal resize
             if e.width <= 912:
-                welcome_text.config(font=('Verdana', 30))
-                settings_button.config(font=('Arial', 45))
-                start_button.config(font=('Arial', 45))
+                self.welcome_text.config(font=('Verdana', 30))
+                self.settings_button.config(font=('Arial', 45))
+                self.start_button.config(font=('Arial', 45))
             elif 912 < e.width <= 1004:
-                welcome_text.config(font=("Verdana", 36))
-                settings_button.config(font=('Arial', 45))
-                start_button.config(font=('Arial', 45))
+                self.welcome_text.config(font=("Verdana", 36))
+                self.settings_button.config(font=('Arial', 45))
+                self.start_button.config(font=('Arial', 45))
             elif 1004 < e.width < 1160:
-                welcome_text.config(font=("Verdana", 40))
-                settings_button.config(font=('Arial', 45))
-                start_button.config(font=('Arial', 45))
+                self.welcome_text.config(font=("Verdana", 40))
+                self.settings_button.config(font=('Arial', 45))
+                self.start_button.config(font=('Arial', 45))
             elif e.width > 1160:
-                welcome_text.config(font=('Verdana', 45))
-                settings_button.config(font=('Arial', 45))
-                start_button.config(font=('Arial', 45))
-
+                self.welcome_text.config(font=('Verdana', 45))
+                self.settings_button.config(font=('Arial', 45))
+                self.start_button.config(font=('Arial', 45))
+            # Buttons resize
             if e.height <= 610 and e.width > 1160:
-                start_button.config(font=('Arial', 35))
-                settings_button.config(font=('Arial', 35))
+                self.start_button.config(font=('Arial', 35))
+                self.settings_button.config(font=('Arial', 35))
             elif 610 < e.height <= 645 and e.width > 1160:
-                start_button.config(font=('Arial', 45))
-                settings_button.config(font=('Arial', 45))
+                self.start_button.config(font=('Arial', 45))
+                self.settings_button.config(font=('Arial', 45))
             elif 645 < e.height <= 700 and e.width > 1160:
-                start_button.config(font=('Arial', 55))
-                settings_button.config(font=('Arial', 55))
+                self.start_button.config(font=('Arial', 55))
+                self.settings_button.config(font=('Arial', 55))
             elif 700 < e.height <= 740 and e.width > 1160:
-                start_button.config(font=('Arial', 65))
-                settings_button.config(font=('Arial', 65))
+                self.start_button.config(font=('Arial', 65))
+                self.settings_button.config(font=('Arial', 65))
             elif 740 < e.height <= 795 and e.width > 1160:
-                start_button.config(font=('Arial', 75))
-                settings_button.config(font=('Arial', 75))
+                self.start_button.config(font=('Arial', 75))
+                self.settings_button.config(font=('Arial', 75))
             elif 795 < e.height <= 807 and e.width > 1160:
-                start_button.config(font=('Arial', 85))
-                settings_button.config(font=('Arial', 85))
+                self.start_button.config(font=('Arial', 85))
+                self.settings_button.config(font=('Arial', 85))
             elif e.height > 807 and e.width > 1160:
-                start_button.config(font=('Arial', 95))
-                settings_button.config(font=('Arial', 95))
+                self.start_button.config(font=('Arial', 95))
+                self.settings_button.config(font=('Arial', 95))
 
         self.bind("<Configure>", font_resize)
+
+    def greetings_page_theme_update(self):
+        self.welcome_text.config(bg=bg, fg=fg)
+        self.start_button.config(bg=num_bg, fg=fg, activeforeground=active_fg, activebackground=bg, disabledforeground=bg)
+        self.settings_button.config(bg=num_bg, fg=home_btn_fg, activeforeground=home_btn_active_fg, activebackground=bg, disabledforeground=bg)
 
 
 class SettingsPage(Frame):
 
     def __init__(self, parent, controller):
         Frame.__init__(self, parent, bg=bg)
+        self.controller = controller
 
-        examples_container = Label(self, bg=bg)
-        examples_container.pack(side=TOP, anchor='n')
+        self.main_info = Label(self, bg=bg, fg=fg, font=("Arial", 35), text='Choose the theme:')
+        self.main_info.pack(side=TOP, expand=True)
 
-        Grid.rowconfigure(examples_container, 0, weight=1)
+        self.themes_changers_container = Label(self, bg=bg)
+        self.themes_changers_container.pack(side=TOP, anchor='n')
 
-        Grid.columnconfigure(examples_container, 0, weight=1)
-        Grid.columnconfigure(examples_container, 1, weight=1)
-        Grid.columnconfigure(examples_container, 2, weight=1)
+        Grid.rowconfigure(self.themes_changers_container, 0, weight=1)
+        Grid.columnconfigure(self.themes_changers_container, 0, weight=1)
+        Grid.columnconfigure(self.themes_changers_container, 1, weight=1)
+        Grid.columnconfigure(self.themes_changers_container, 2, weight=1)
 
-        example_text = Entry(examples_container, justify=CENTER, font=("Times New Roman", 55), bg=bg, fg=fg,
-                             disabledbackground=bg, width=11, bd=1, disabledforeground=fg,
-                             cursor="arrow", state=DISABLED)
-        example_text.grid(row=0, column=0, sticky="nsew")
 
-        example_text.config(state=NORMAL)
-        example_text.insert(0, 'text example')
-        example_text.config(state=DISABLED)
+        self.neon_theme_btn = Button(self.themes_changers_container, text="Neon green", bg=num_bg, fg=num_fg, font=("Times New Roman", 55),
+                                     activeforeground=num_active_fg, activebackground=num_bg, bd=0, disabledforeground=num_bg,
+                                     command=self.change_theme_to_neon)
+        self.neon_theme_btn.grid(row=0, column=1, sticky='nsew')
 
-        example_button1 = Button(examples_container, text="Example", bg=num_bg, fg=fg, font=("Times New Roman", 55),
-                                 activeforeground=active_fg, activebackground=bg, bd=0,
-                                 disabledforeground=bg)
-        example_button1.grid(row=0, column=1, sticky='nsew')
+        self.dark_theme_btn = Button(self.themes_changers_container, text="Dark", bg=bg, fg=fg, font=("Times New Roman", 55),
+                                activeforeground=active_fg, activebackground=bg, bd=0, disabledforeground=bg,
+                                command=self.change_theme_to_dark)
+        self.dark_theme_btn.grid(row=0, column=0, sticky='nsew')
 
-        example_button2 = Button(examples_container, text="Example", bg=bg, fg=fg, font=("Times New Roman", 55),
-                                 activeforeground=active_fg, activebackground=bg, bd=0,
-                                 disabledforeground=bg)
-        example_button2.grid(row=0, column=2, sticky='nsew')
+        self.light_theme_btn = Button(self.themes_changers_container, text="light", bg=bg, fg=fg, font=("Times New Roman", 55),
+                                      activeforeground=active_fg, activebackground=bg, bd=0, disabledforeground=bg,
+                                      command=self.change_theme_to_light)
+        self.light_theme_btn.grid(row=0, column=2, sticky='nsew')
 
-        container = Label(self, bg=bg)
-        container.pack(side=TOP, anchor='n', expand=True, pady=3)
 
-        Grid.rowconfigure(container, 0, weight=1)
-        Grid.rowconfigure(container, 1, weight=1)
-        Grid.rowconfigure(container, 2, weight=1)
-        Grid.columnconfigure(container, 0, weight=1)
-        Grid.columnconfigure(container, 1, weight=1)
-        Grid.columnconfigure(container, 2, weight=1)
-        Grid.columnconfigure(container, 3, weight=1)
-        Grid.columnconfigure(container, 4, weight=1)
-
-        btn_d = 35
-        info1 = Button(container, text="change", font=("Arial", btn_d), bg=bg, fg=fg, state=DISABLED,
-                       disabledforeground=fg, bd=0)
-        info1.grid(column=0, row=0, sticky="nsew")
-
-        info2 = Button(container, text="colors", font=("Arial", btn_d), bg=bg, fg=fg, state=DISABLED,
-                       disabledforeground=fg, bd=0)
-        info2.grid(column=0, row=1, sticky="nsew")
-
-        info3 = Button(container, text="for:", font=("Arial", btn_d), bg=bg, fg=fg, state=DISABLED,
-                       disabledforeground=fg, bd=0)
-        info3.grid(column=0, row=2, sticky="nsew")
-
-        win_back = Button(container, text="main bg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
-                          activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                          bg=num_bg, fg=fg)
-        win_back.grid(column=1, row=2, sticky="nsew")
-
-        win_fore = Button(container, text="main fg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
-                          activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                          bg=num_bg, fg=fg)
-        win_fore.grid(column=2, row=2, sticky="nsew")
-
-        win_active_fore = Button(container, text="active fg", font=("Arial", btn_d), bg=num_bg, fg=fg,
-                                 command=lambda: print('You pressed me!'),
-                                 activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg)
-        win_active_fore.grid(column=3, row=2, sticky="nsew")
-
-        home_fg = Button(container, text="special fg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
-                         activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                         bg=num_bg, fg=fg)
-        home_fg.grid(column=1, row=1, sticky="nsew")
-
-        home_bg = Button(container, text="special bg", font=("special bg", btn_d), bg=num_bg, fg=fg,
-                         command=lambda: print('You pressed me!'),
-                         activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg)
-        home_bg.grid(column=2, row=1, sticky="nsew")
-
-        home_active_fg = Button(container, text="special afg", font=("Arial", btn_d), bg=num_bg, fg=fg,
-                                command=lambda: print('You pressed me!'),
-                                activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg)
-        home_active_fg.grid(column=3, row=1, sticky="nsew")
-
-        main_fg = Button(container, text="btn fg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
-                         activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                         bg=num_bg, fg=fg)
-        main_fg.grid(column=1, row=0, sticky="nsew")
-
-        main_bg = Button(container, text="btn bg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
-                         activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                         bg=num_bg, fg=fg)
-        main_bg.grid(column=2, row=0, sticky="nsew")
-
-        main_active_fg = Button(container, text="button afg", font=("Arial", btn_d), bg=num_bg, fg=fg,
-                                command=lambda: print('You pressed me!'),
-                                activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg)
-        main_active_fg.grid(column=3, row=0, sticky="nsew")
-
-        num_btn_fg = Button(container, text="num fg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
-                            activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                            bg=num_bg, fg=fg)
-        num_btn_fg.grid(column=4, row=0, sticky="nsew")
-
-        num_btn_bg = Button(container, text="num bg", font=("Arial", btn_d), command=lambda: print('You pressed me!'),
-                            activeforeground=active_fg, activebackground=bg, disabledforeground=bg, bg=bg, fg=fg)
-        num_btn_bg.grid(column=4, row=1, sticky="nsew")
-
-        num_afg = Button(container, text="num afg", font=("Arial", btn_d),
-                         command=lambda: print('You pressed me!'),
-                         activeforeground=active_fg, activebackground=bg, disabledforeground=bg,
-                         bg=bg, fg=fg)
-        num_afg.grid(column=4, row=2, sticky="nsew")
-
-        home_button = Button(self, text="Home", bg=num_bg, fg=home_btn_fg, font=("Arial", 45),
-                             activeforeground=home_btn_active_fg, activebackground=bg, bd=0,
-                             disabledforeground=bg, command=lambda: controller.show_frame(GreetingsPage))
-        home_button.pack(fill=BOTH, side=BOTTOM, expand=True)
+        self.home_button = Button(self, text="Home", bg=num_bg, fg=home_btn_fg, font=("Arial", 45),
+                                  activeforeground=home_btn_active_fg, activebackground=bg, bd=0,
+                                  disabledforeground=bg, command=lambda: controller.show_frame(GreetingsPage))
+        self.home_button.pack(fill=BOTH, side=BOTTOM, expand=True)
 
         def font_resize_settings(e):
             """Resizes font based on window height and width"""
-            if 912 < e.width <= 935:
-                btn_ssf2 = 22  # Button smallest font
-                info1.config(font=('Arial', btn_ssf2))
-                info2.config(font=('Arial', btn_ssf2))
-                info3.config(font=('Arial', btn_ssf2))
-                win_back.config(font=('Arial', btn_ssf2))
-                win_fore.config(font=('Arial', btn_ssf2))
-                win_active_fore.config(font=('Arial', btn_ssf2))
-                home_fg.config(font=('Arial', btn_ssf2))
-                home_bg.config(font=('Arial', btn_ssf2))
-                home_active_fg.config(font=('Arial', btn_ssf2))
-                main_fg.config(font=('Arial', btn_ssf2))
-                main_bg.config(font=('Arial', btn_ssf2))
-                main_active_fg.config(font=('Arial', btn_ssf2))
-                num_btn_fg.config(font=('Arial', btn_ssf2))
-                num_btn_bg.config(font=('Arial', btn_ssf2))
-                num_afg.config(font=('Arial', btn_ssf2))
-            elif 935 < e.width <= 1160:  # Resets button and entry font sizes to default
-                btn_dm = 25  # Button permanent default font (method variable)
-                info1.config(font=('Arial', btn_dm))
-                info2.config(font=('Arial', btn_dm))
-                info3.config(font=('Arial', btn_dm))
-                win_back.config(font=('Arial', btn_dm))
-                win_fore.config(font=('Arial', btn_dm))
-                win_active_fore.config(font=('Arial', btn_dm))
-                home_fg.config(font=('Arial', btn_dm))
-                home_bg.config(font=('Arial', btn_dm))
-                home_active_fg.config(font=('Arial', btn_dm))
-                main_fg.config(font=('Arial', btn_dm))
-                main_bg.config(font=('Arial', btn_dm))
-                main_active_fg.config(font=('Arial', btn_dm))
-                num_btn_fg.config(font=('Arial', btn_dm))
-                num_btn_bg.config(font=('Arial', btn_dm))
-                num_afg.config(font=('Arial', btn_dm))
-            elif e.height <= 610 and e.width > 1160:
-                btn_ssf = 30  # Button smallest font
-                win_back.config(font=('Arial', btn_ssf))
-                win_fore.config(font=('Arial', btn_ssf))
-                win_active_fore.config(font=('Arial', btn_ssf))
-                home_fg.config(font=('Arial', btn_ssf))
-                home_bg.config(font=('Arial', btn_ssf))
-                home_active_fg.config(font=('Arial', btn_ssf))
-                main_fg.config(font=('Arial', btn_ssf))
-                main_bg.config(font=('Arial', btn_ssf))
-                main_active_fg.config(font=('Arial', btn_ssf))
-                num_btn_fg.config(font=('Arial', btn_ssf))
-                num_btn_bg.config(font=('Arial', btn_ssf))
-                num_afg.config(font=('Arial', btn_ssf))
-            elif 610 < e.height <= 700 and e.width > 1160:
-                btn_dm1 = 35  # Button default font
-                win_back.config(font=('Arial', btn_dm1))
-                win_fore.config(font=('Arial', btn_dm1))
-                win_active_fore.config(font=('Arial', btn_dm1))
-                home_fg.config(font=('Arial', btn_dm1))
-                home_bg.config(font=('Arial', btn_dm1))
-                home_active_fg.config(font=('Arial', btn_dm1))
-                main_fg.config(font=('Arial', btn_dm1))
-                main_bg.config(font=('Arial', btn_dm1))
-                main_active_fg.config(font=('Arial', btn_dm1))
-                num_btn_fg.config(font=('Arial', btn_dm1))
-                num_btn_bg.config(font=('Arial', btn_dm1))
-                num_afg.config(font=('Arial', btn_dm1))
-            # Change font for home button
+            # Change font for big buttons
             if e.width <= 912:
-                home_button.config(font=('Arial', 45))
-                example_text.config(font=('Times New Roman', 42))
-                example_button1.config(font=('Times New Roman', 42))
-                example_button2.config(font=('Times New Roman', 42))
+                self.home_button.config(font=('Arial', 45))
+                self.neon_theme_btn.config(font=('Times New Roman', 42))
+                self.dark_theme_btn.config(font=('Times New Roman', 42))
+                self.light_theme_btn.config(font=('Times New Roman', 42))
             elif 912 < e.width <= 1160:
-                home_button.config(font=('Arial', 55))
-                example_text.config(font=('Times New Roman', 50))
-                example_button1.config(font=('Times New Roman', 50))
-                example_button2.config(font=('Times New Roman', 50))
+                self.home_button.config(font=('Arial', 55))
+                self.neon_theme_btn.config(font=('Times New Roman', 50))
+                self.dark_theme_btn.config(font=('Times New Roman', 50))
+                self.light_theme_btn.config(font=('Times New Roman', 50))
             elif e.width > 1160:
-                home_button.config(font=('Arial', 55))
-                example_text.config(font=('Times New Roman', 55))
-                example_button1.config(font=('Times New Roman', 55))
-                example_button2.config(font=('Times New Roman', 55))
+                self.home_button.config(font=('Arial', 55))
+                self.neon_theme_btn.config(font=('Times New Roman', 55))
+                self.dark_theme_btn.config(font=('Times New Roman', 55))
+                self.light_theme_btn.config(font=('Times New Roman', 55))
 
         self.bind("<Configure>", font_resize_settings)
+
+    def settings_page_theme_update(self):
+        self.main_info.config(bg=bg, fg=fg)
+        self.themes_changers_container.config(bg=bg)
+        self.neon_theme_btn.config(bg=num_bg, fg=num_fg, activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg)
+        self.dark_theme_btn.config(bg=bg, fg=fg, activeforeground=active_fg, activebackground=bg, disabledforeground=bg)
+        self.light_theme_btn.config(bg=bg, fg=fg, activeforeground=active_fg, activebackground=bg, disabledforeground=bg)
+
+    def change_theme_to_dark(self):
+        dark_theme_colors()
+        page = self.controller.get_page(MainPage)
+        page.main_page_theme_update()
+        page = self.controller.get_page(SettingsPage)
+        page.settings_page_theme_update()
+        page = self.controller.get_page(GreetingsPage)
+        page.greetings_page_theme_update()
+
+    def change_theme_to_neon(self):
+        neon_theme_colors()
+        page = self.controller.get_page(MainPage)
+        page.main_page_theme_update()
+        page = self.controller.get_page(SettingsPage)
+        page.settings_page_theme_update()
+        page = self.controller.get_page(GreetingsPage)
+        page.greetings_page_theme_update()
+
+    def change_theme_to_light(self):
+        light_theme_colors()
+        page = self.controller.get_page(MainPage)
+        page.main_page_theme_update()
+        page = self.controller.get_page(SettingsPage)
+        page.settings_page_theme_update()
+        page = self.controller.get_page(GreetingsPage)
+        page.greetings_page_theme_update()
 
 
 class MainPage(Frame):
@@ -368,324 +273,340 @@ class MainPage(Frame):
         Frame.__init__(self, parent, bg=bg)
         self.controller = controller
 
-        # print(self.winfo_screenheight())
-
         MainPage.integer = randint(11, 99)
 
         text = f"Square root of {MainPage.integer ** 2} is"
 
-        number_display = Label(self, text=text, font=("Verdana", 75), bg=bg, fg=fg)
-        number_display.pack(expand=True)
+        self.number_display = Label(self, text=text, font=("Verdana", 75), bg=bg, fg=fg)
+        self.number_display.pack(expand=True)
 
-        answer_input = Entry(self, justify=CENTER, font=("Times New Roman", 55), bg=bg, fg=fg,
+        self.answer_input = Entry(self, justify=CENTER, font=("Times New Roman", 55), bg=bg, fg=fg,
                              state=DISABLED, disabledbackground=bg, width=2, bd=1, disabledforeground=fg,
                              cursor="arrow")
-        answer_input.pack(expand=True)
+        self.answer_input.pack(expand=True)
 
         def insert_number(number):
-            answer_input.config(state=NORMAL)
-            answer_input.insert(END, str(number))
-            answer_input.config(state=DISABLED)
-            confirm_button.config(state=NORMAL)
-            clear_button.config(state=NORMAL)
+            self.answer_input.config(state=NORMAL)
+            self.answer_input.insert(END, str(number))
+            self.answer_input.config(state=DISABLED)
+            self.confirm_button.config(state=NORMAL)
+            self.clear_button.config(state=NORMAL)
 
         def clear():
-            answer_input.config(state=NORMAL)
-            answer_input.delete(0, END)
-            answer_input.config(state=DISABLED)
-            confirm_button.config(state=DISABLED)
-            clear_button.config(state=DISABLED)
+            self.answer_input.config(state=NORMAL)
+            self.answer_input.delete(0, END)
+            self.answer_input.config(state=DISABLED)
+            self.confirm_button.config(state=DISABLED)
+            self.clear_button.config(state=DISABLED)
 
         def home():
             controller.show_frame(GreetingsPage)
             MainPage.integer = randint(11, 99)
             new_text = f"Square root of {MainPage.integer ** 2} is"
-            number_display.config(text=new_text)
-            answer_input.config(bd=1)
+            self.number_display.config(text=new_text)
+            self.answer_input.config(bd=1)
             buttons_on()
-            clear_button.config(text="Clear", command=clear, fg=fg, activeforeground=active_fg, state=DISABLED)
-            confirm_button.config(state=DISABLED)
-            answer_input.config(state=DISABLED)
+            self.clear_button.config(text="Clear", command=clear, fg=fg, activeforeground=active_fg, state=DISABLED)
+            self.confirm_button.config(state=DISABLED)
+            self.answer_input.config(state=DISABLED)
 
         def buttons_on():
-            one.config(state=NORMAL)
-            two.config(state=NORMAL)
-            three.config(state=NORMAL)
-            four.config(state=NORMAL)
-            five.config(state=NORMAL)
-            six.config(state=NORMAL)
-            seven.config(state=NORMAL)
-            eight.config(state=NORMAL)
-            nine.config(state=NORMAL)
-            zero.config(state=NORMAL)
+            self.one.config(state=NORMAL)
+            self.two.config(state=NORMAL)
+            self.three.config(state=NORMAL)
+            self.four.config(state=NORMAL)
+            self.five.config(state=NORMAL)
+            self.six.config(state=NORMAL)
+            self.seven.config(state=NORMAL)
+            self.eight.config(state=NORMAL)
+            self.nine.config(state=NORMAL)
+            self.zero.config(state=NORMAL)
 
         def buttons_off():
-            one.config(state=DISABLED)
-            two.config(state=DISABLED)
-            three.config(state=DISABLED)
-            four.config(state=DISABLED)
-            five.config(state=DISABLED)
-            six.config(state=DISABLED)
-            seven.config(state=DISABLED)
-            eight.config(state=DISABLED)
-            nine.config(state=DISABLED)
-            zero.config(state=DISABLED)
+            self.one.config(state=DISABLED)
+            self.two.config(state=DISABLED)
+            self.three.config(state=DISABLED)
+            self.four.config(state=DISABLED)
+            self.five.config(state=DISABLED)
+            self.six.config(state=DISABLED)
+            self.seven.config(state=DISABLED)
+            self.eight.config(state=DISABLED)
+            self.nine.config(state=DISABLED)
+            self.zero.config(state=DISABLED)
 
         def confirm():
-            answer_input.config(state=NORMAL)
-            if len(answer_input.get()) != 0:
-                answer = int(answer_input.get())
+            self.answer_input.config(state=NORMAL)
+            if len(self.answer_input.get()) != 0:
+                answer = int(self.answer_input.get())
                 if answer == MainPage.integer:
                     new_text = f"Your answer is correct."
-                    number_display.config(text=new_text)
-                    answer_input.config(bd=0)
+                    self.number_display.config(text=new_text)
+                    self.answer_input.config(bd=0)
                     buttons_off()
-                    clear_button.config(text="Home", command=home, fg=home_btn_fg, activeforeground=home_btn_active_fg)
+                    self.clear_button.config(text="Home", command=home, fg=home_btn_fg, activeforeground=home_btn_active_fg)
                 else:
                     new_text = f"Correct answer was {MainPage.integer}"
-                    number_display.config(text=new_text)
-                    answer_input.config(bd=0)
+                    self.number_display.config(text=new_text)
+                    self.answer_input.config(bd=0)
                     buttons_off()
-                    clear_button.config(text="Home", command=home, fg=home_btn_fg, activeforeground=home_btn_active_fg)
+                    self.clear_button.config(text="Home", command=home, fg=home_btn_fg, activeforeground=home_btn_active_fg)
             else:
                 MainPage.integer = randint(11, 99)
                 new_text = f"Square root of {MainPage.integer ** 2} is"
-                number_display.config(text=new_text)
-                answer_input.config(bd=1)
+                self.number_display.config(text=new_text)
+                self.answer_input.config(bd=1)
                 buttons_on()
-                clear_button.config(text="Clear", command=clear, fg=fg, activeforeground=active_fg)
-                confirm_button.config(state=DISABLED)
-                clear_button.config(state=DISABLED)
-            answer_input.delete(0, END)
-            answer_input.config(state=DISABLED)
+                self.clear_button.config(text="Clear", command=clear, fg=fg, activeforeground=active_fg)
+                self.confirm_button.config(state=DISABLED)
+                self.clear_button.config(state=DISABLED)
+            self.answer_input.delete(0, END)
+            self.answer_input.config(state=DISABLED)
 
-        buttons_container = Label(self, bg=bg)
-        buttons_container.pack(expand=True, side=BOTTOM, anchor='s')
+        self.buttons_container = Label(self, bg=bg)
+        self.buttons_container.pack(expand=True, side=BOTTOM, anchor='s')
 
-        Grid.rowconfigure(buttons_container, 0, weight=1)
-        Grid.rowconfigure(buttons_container, 1, weight=1)
-        Grid.rowconfigure(buttons_container, 2, weight=1)
-        Grid.columnconfigure(buttons_container, 0, weight=1)
-        Grid.columnconfigure(buttons_container, 1, weight=1)
-        Grid.columnconfigure(buttons_container, 2, weight=1)
-        Grid.columnconfigure(buttons_container, 3, weight=1)
+        Grid.rowconfigure(self.buttons_container, 0, weight=1)
+        Grid.rowconfigure(self.buttons_container, 1, weight=1)
+        Grid.rowconfigure(self.buttons_container, 2, weight=1)
+        Grid.columnconfigure(self.buttons_container, 0, weight=1)
+        Grid.columnconfigure(self.buttons_container, 1, weight=1)
+        Grid.columnconfigure(self.buttons_container, 2, weight=1)
+        Grid.columnconfigure(self.buttons_container, 3, weight=1)
 
         btn_d = 50
 
-        one = Button(buttons_container, text="1", font=("Arial", btn_d), command=lambda: insert_number(1),
-                     activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+        self.one = Button(self.buttons_container, text="1", font=("Arial", btn_d), command=lambda: insert_number(1),
+                     activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
                      bg=num_bg, fg=fg)
-        one.grid(column=0, row=2, sticky="nsew")
+        self.one.grid(column=0, row=2, sticky="nsew")
 
-        two = Button(buttons_container, text="2", font=("Arial", btn_d), command=lambda: insert_number(2),
-                     activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+        self.two = Button(self.buttons_container, text="2", font=("Arial", btn_d), command=lambda: insert_number(2),
+                     activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
                      bg=num_bg, fg=fg)
-        two.grid(column=1, row=2, sticky="nsew")
+        self.two.grid(column=1, row=2, sticky="nsew")
 
-        three = Button(buttons_container, text="3", font=("Arial", btn_d), command=lambda: insert_number(3),
-                       activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+        self.three = Button(self.buttons_container, text="3", font=("Arial", btn_d), command=lambda: insert_number(3),
+                       activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
                        bg=num_bg, fg=fg)
-        three.grid(column=2, row=2, sticky="nsew")
+        self.three.grid(column=2, row=2, sticky="nsew")
 
-        four = Button(buttons_container, text="4", font=("Arial", btn_d), command=lambda: insert_number(4),
-                      activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+        self.four = Button(self.buttons_container, text="4", font=("Arial", btn_d), command=lambda: insert_number(4),
+                      activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
                       bg=num_bg, fg=fg)
-        four.grid(column=0, row=1, sticky="nsew")
+        self.four.grid(column=0, row=1, sticky="nsew")
 
-        five = Button(buttons_container, text="5", font=("Arial", btn_d), command=lambda: insert_number(5),
-                      activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+        self.five = Button(self.buttons_container, text="5", font=("Arial", btn_d), command=lambda: insert_number(5),
+                      activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
                       bg=num_bg, fg=fg)
-        five.grid(column=1, row=1, sticky="nsew")
+        self.five.grid(column=1, row=1, sticky="nsew")
 
-        six = Button(buttons_container, text="6", font=("Arial", btn_d), command=lambda: insert_number(6),
-                     activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+        self.six = Button(self.buttons_container, text="6", font=("Arial", btn_d), command=lambda: insert_number(6),
+                     activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
                      bg=num_bg, fg=fg)
-        six.grid(column=2, row=1, sticky="nsew")
+        self.six.grid(column=2, row=1, sticky="nsew")
 
-        seven = Button(buttons_container, text="7", font=("Arial", btn_d), command=lambda: insert_number(7),
-                       activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+        self.seven = Button(self.buttons_container, text="7", font=("Arial", btn_d), command=lambda: insert_number(7),
+                       activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
                        bg=num_bg, fg=fg)
-        seven.grid(column=0, row=0, sticky="nsew")
+        self.seven.grid(column=0, row=0, sticky="nsew")
 
-        eight = Button(buttons_container, text="8", font=("Arial", btn_d), command=lambda: insert_number(8),
-                       activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+        self.eight = Button(self.buttons_container, text="8", font=("Arial", btn_d), command=lambda: insert_number(8),
+                       activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
                        bg=num_bg, fg=fg)
-        eight.grid(column=1, row=0, sticky="nsew")
+        self.eight.grid(column=1, row=0, sticky="nsew")
 
-        nine = Button(buttons_container, text="9", font=("Arial", btn_d), command=lambda: insert_number(9),
-                      activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+        self.nine = Button(self.buttons_container, text="9", font=("Arial", btn_d), command=lambda: insert_number(9),
+                      activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
                       bg=num_bg, fg=fg)
-        nine.grid(column=2, row=0, sticky="nsew")
+        self.nine.grid(column=2, row=0, sticky="nsew")
 
-        zero = Button(buttons_container, text="0", font=("Arial", btn_d), command=lambda: insert_number(0),
-                      activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg,
+        self.zero = Button(self.buttons_container, text="0", font=("Arial", btn_d), command=lambda: insert_number(0),
+                      activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
                       bg=num_bg, fg=fg)
-        zero.grid(column=3, row=0, sticky="nsew")
+        self.zero.grid(column=3, row=0, sticky="nsew")
 
-        clear_button = Button(buttons_container, text="Clear", font=("Arial", btn_d), command=clear,
+        self.clear_button = Button(self.buttons_container, text="Clear", font=("Arial", btn_d), command=clear,
                               activeforeground=active_fg, activebackground=bg, disabledforeground=bg,
                               bg=bg, fg=fg, state=DISABLED)
-        clear_button.grid(column=3, row=1, sticky="nsew")
+        self.clear_button.grid(column=3, row=1, sticky="nsew")
 
-        confirm_button = Button(buttons_container, text="Confirm", font=("Arial", btn_d), command=confirm,
-                                state=DISABLED,
-                                activeforeground=active_fg, activebackground=bg, disabledforeground=bg,
-                                bg=bg, fg=fg)
-        confirm_button.grid(column=3, row=2, sticky="nsew")
+        self.confirm_button = Button(self.buttons_container, text="Confirm", font=("Arial", btn_d), command=confirm,
+                                state=DISABLED, bg=bg, fg=fg,
+                                activeforeground=active_fg, activebackground=bg, disabledforeground=bg)
+        self.confirm_button.grid(column=3, row=2, sticky="nsew")
 
         def font_resize_main_page(e):
             """Resizes font based on window height and width"""
-            # Buttons + entry resize
+            # Buttons and entry resize
             if e.width <= 935:
                 btn_ssf1 = 45  # Button smallest font
-                answer_input.config(font=('Times New Roman', 55))
-                one.config(font=('Arial', btn_ssf1))
-                two.config(font=('Arial', btn_ssf1))
-                three.config(font=('Arial', btn_ssf1))
-                four.config(font=('Arial', btn_ssf1))
-                five.config(font=('Arial', btn_ssf1))
-                six.config(font=('Arial', btn_ssf1))
-                seven.config(font=('Arial', btn_ssf1))
-                eight.config(font=('Arial', btn_ssf1))
-                nine.config(font=('Arial', btn_ssf1))
-                zero.config(font=('Arial', btn_ssf1))
-                clear_button.config(font=('Arial', btn_ssf1))
-                confirm_button.config(font=('Arial', btn_ssf1))
+                self.answer_input.config(font=('Times New Roman', 55))
+                self.one.config(font=('Arial', btn_ssf1))
+                self.two.config(font=('Arial', btn_ssf1))
+                self.three.config(font=('Arial', btn_ssf1))
+                self.four.config(font=('Arial', btn_ssf1))
+                self.five.config(font=('Arial', btn_ssf1))
+                self.six.config(font=('Arial', btn_ssf1))
+                self.seven.config(font=('Arial', btn_ssf1))
+                self.eight.config(font=('Arial', btn_ssf1))
+                self.nine.config(font=('Arial', btn_ssf1))
+                self.zero.config(font=('Arial', btn_ssf1))
+                self.clear_button.config(font=('Arial', btn_ssf1))
+                self.confirm_button.config(font=('Arial', btn_ssf1))
             elif 935 < e.width <= 1160:  # Resets button and entry font sizes to default
                 btn_dm = 50  # Button default font (method variable)
-                answer_input.config(font=('Times New Roman', 55))
-                one.config(font=('Arial', btn_dm))
-                two.config(font=('Arial', btn_dm))
-                three.config(font=('Arial', btn_dm))
-                four.config(font=('Arial', btn_dm))
-                five.config(font=('Arial', btn_dm))
-                six.config(font=('Arial', btn_dm))
-                seven.config(font=('Arial', btn_dm))
-                eight.config(font=('Arial', btn_dm))
-                nine.config(font=('Arial', btn_dm))
-                zero.config(font=('Arial', btn_dm))
-                clear_button.config(font=('Arial', btn_dm))
-                confirm_button.config(font=('Arial', btn_dm))
+                self.answer_input.config(font=('Times New Roman', 55))
+                self.one.config(font=('Arial', btn_dm))
+                self.two.config(font=('Arial', btn_dm))
+                self.three.config(font=('Arial', btn_dm))
+                self.four.config(font=('Arial', btn_dm))
+                self.five.config(font=('Arial', btn_dm))
+                self.six.config(font=('Arial', btn_dm))
+                self.seven.config(font=('Arial', btn_dm))
+                self.eight.config(font=('Arial', btn_dm))
+                self.nine.config(font=('Arial', btn_dm))
+                self.zero.config(font=('Arial', btn_dm))
+                self.clear_button.config(font=('Arial', btn_dm))
+                self.confirm_button.config(font=('Arial', btn_dm))
             elif e.height <= 610 and e.width > 1160:
                 btn_ssf = 45  # Button smallest font
-                answer_input.config(font=('Times New Roman', 55))
-                one.config(font=('Arial', btn_ssf))
-                two.config(font=('Arial', btn_ssf))
-                three.config(font=('Arial', btn_ssf))
-                four.config(font=('Arial', btn_ssf))
-                five.config(font=('Arial', btn_ssf))
-                six.config(font=('Arial', btn_ssf))
-                seven.config(font=('Arial', btn_ssf))
-                eight.config(font=('Arial', btn_ssf))
-                nine.config(font=('Arial', btn_ssf))
-                zero.config(font=('Arial', btn_ssf))
-                clear_button.config(font=('Arial', btn_ssf))
-                confirm_button.config(font=('Arial', btn_ssf))
+                self.answer_input.config(font=('Times New Roman', 55))
+                self.one.config(font=('Arial', btn_ssf))
+                self.two.config(font=('Arial', btn_ssf))
+                self.three.config(font=('Arial', btn_ssf))
+                self.four.config(font=('Arial', btn_ssf))
+                self.five.config(font=('Arial', btn_ssf))
+                self.six.config(font=('Arial', btn_ssf))
+                self.seven.config(font=('Arial', btn_ssf))
+                self.eight.config(font=('Arial', btn_ssf))
+                self.nine.config(font=('Arial', btn_ssf))
+                self.zero.config(font=('Arial', btn_ssf))
+                self.clear_button.config(font=('Arial', btn_ssf))
+                self.confirm_button.config(font=('Arial', btn_ssf))
             elif 610 < e.height <= 645 and e.width > 1160:
                 btn_dm = 50  # Button default font
-                answer_input.config(font=('Times New Roman', 55))
-                one.config(font=('Arial', btn_dm))
-                two.config(font=('Arial', btn_dm))
-                three.config(font=('Arial', btn_dm))
-                four.config(font=('Arial', btn_dm))
-                five.config(font=('Arial', btn_dm))
-                six.config(font=('Arial', btn_dm))
-                seven.config(font=('Arial', btn_dm))
-                eight.config(font=('Arial', btn_dm))
-                nine.config(font=('Arial', btn_dm))
-                zero.config(font=('Arial', btn_dm))
-                clear_button.config(font=('Arial', btn_dm))
-                confirm_button.config(font=('Arial', btn_dm))
+                self.answer_input.config(font=('Times New Roman', 55))
+                self.one.config(font=('Arial', btn_dm))
+                self.two.config(font=('Arial', btn_dm))
+                self.three.config(font=('Arial', btn_dm))
+                self.four.config(font=('Arial', btn_dm))
+                self.five.config(font=('Arial', btn_dm))
+                self.six.config(font=('Arial', btn_dm))
+                self.seven.config(font=('Arial', btn_dm))
+                self.eight.config(font=('Arial', btn_dm))
+                self.nine.config(font=('Arial', btn_dm))
+                self.zero.config(font=('Arial', btn_dm))
+                self.clear_button.config(font=('Arial', btn_dm))
+                self.confirm_button.config(font=('Arial', btn_dm))
             elif 645 < e.height <= 700 and e.width > 1160:
                 btn_m = 55  # Button medium font
-                answer_input.config(font=('Times New Roman', 60))
-                one.config(font=('Arial', btn_m))
-                two.config(font=('Arial', btn_m))
-                three.config(font=('Arial', btn_m))
-                four.config(font=('Arial', btn_m))
-                five.config(font=('Arial', btn_m))
-                six.config(font=('Arial', btn_m))
-                seven.config(font=('Arial', btn_m))
-                eight.config(font=('Arial', btn_m))
-                nine.config(font=('Arial', btn_m))
-                zero.config(font=('Arial', btn_m))
-                clear_button.config(font=('Arial', btn_m))
-                confirm_button.config(font=('Arial', btn_m))
+                self.answer_input.config(font=('Times New Roman', 60))
+                self.one.config(font=('Arial', btn_m))
+                self.two.config(font=('Arial', btn_m))
+                self.three.config(font=('Arial', btn_m))
+                self.four.config(font=('Arial', btn_m))
+                self.five.config(font=('Arial', btn_m))
+                self.six.config(font=('Arial', btn_m))
+                self.seven.config(font=('Arial', btn_m))
+                self.eight.config(font=('Arial', btn_m))
+                self.nine.config(font=('Arial', btn_m))
+                self.zero.config(font=('Arial', btn_m))
+                self.clear_button.config(font=('Arial', btn_m))
+                self.confirm_button.config(font=('Arial', btn_m))
             elif 700 < e.height <= 715 and e.width > 1160:
                 btn_l = 60  # Button large font
-                answer_input.config(font=('Times New Roman', 60))
-                one.config(font=('Arial', btn_l))
-                two.config(font=('Arial', btn_l))
-                three.config(font=('Arial', btn_l))
-                four.config(font=('Arial', btn_l))
-                five.config(font=('Arial', btn_l))
-                six.config(font=('Arial', btn_l))
-                seven.config(font=('Arial', btn_l))
-                eight.config(font=('Arial', btn_l))
-                nine.config(font=('Arial', btn_l))
-                zero.config(font=('Arial', btn_l))
-                clear_button.config(font=('Arial', btn_l))
-                confirm_button.config(font=('Arial', btn_l))
+                self.answer_input.config(font=('Times New Roman', 60))
+                self.one.config(font=('Arial', btn_l))
+                self.two.config(font=('Arial', btn_l))
+                self.three.config(font=('Arial', btn_l))
+                self.four.config(font=('Arial', btn_l))
+                self.five.config(font=('Arial', btn_l))
+                self.six.config(font=('Arial', btn_l))
+                self.seven.config(font=('Arial', btn_l))
+                self.eight.config(font=('Arial', btn_l))
+                self.nine.config(font=('Arial', btn_l))
+                self.zero.config(font=('Arial', btn_l))
+                self.clear_button.config(font=('Arial', btn_l))
+                self.confirm_button.config(font=('Arial', btn_l))
             elif 740 < e.height <= 795 and e.width > 1160:
                 btn_h = 65  # Button huge font
-                answer_input.config(font=('Times New Roman', 60))
-                one.config(font=('Arial', btn_h))
-                two.config(font=('Arial', btn_h))
-                three.config(font=('Arial', btn_h))
-                four.config(font=('Arial', btn_h))
-                five.config(font=('Arial', btn_h))
-                six.config(font=('Arial', btn_h))
-                seven.config(font=('Arial', btn_h))
-                eight.config(font=('Arial', btn_h))
-                nine.config(font=('Arial', btn_h))
-                zero.config(font=('Arial', btn_h))
-                clear_button.config(font=('Arial', btn_h))
-                confirm_button.config(font=('Arial', btn_h))
+                self.answer_input.config(font=('Times New Roman', 60))
+                self.one.config(font=('Arial', btn_h))
+                self.two.config(font=('Arial', btn_h))
+                self.three.config(font=('Arial', btn_h))
+                self.four.config(font=('Arial', btn_h))
+                self.five.config(font=('Arial', btn_h))
+                self.six.config(font=('Arial', btn_h))
+                self.seven.config(font=('Arial', btn_h))
+                self.eight.config(font=('Arial', btn_h))
+                self.nine.config(font=('Arial', btn_h))
+                self.zero.config(font=('Arial', btn_h))
+                self.clear_button.config(font=('Arial', btn_h))
+                self.confirm_button.config(font=('Arial', btn_h))
             elif 795 < e.height <= 807 and e.width > 1160:
                 btn_h = 65  # Button huge font
-                answer_input.config(font=('Times New Roman', 66))
-                one.config(font=('Arial', btn_h))
-                two.config(font=('Arial', btn_h))
-                three.config(font=('Arial', btn_h))
-                four.config(font=('Arial', btn_h))
-                five.config(font=('Arial', btn_h))
-                six.config(font=('Arial', btn_h))
-                seven.config(font=('Arial', btn_h))
-                eight.config(font=('Arial', btn_h))
-                nine.config(font=('Arial', btn_h))
-                zero.config(font=('Arial', btn_h))
-                clear_button.config(font=('Arial', btn_h))
-                confirm_button.config(font=('Arial', btn_h))
+                self.answer_input.config(font=('Times New Roman', 66))
+                self.one.config(font=('Arial', btn_h))
+                self.two.config(font=('Arial', btn_h))
+                self.three.config(font=('Arial', btn_h))
+                self.four.config(font=('Arial', btn_h))
+                self.five.config(font=('Arial', btn_h))
+                self.six.config(font=('Arial', btn_h))
+                self.seven.config(font=('Arial', btn_h))
+                self.eight.config(font=('Arial', btn_h))
+                self.nine.config(font=('Arial', btn_h))
+                self.zero.config(font=('Arial', btn_h))
+                self.clear_button.config(font=('Arial', btn_h))
+                self.confirm_button.config(font=('Arial', btn_h))
             elif e.height > 807 and e.width > 1160:
                 btn_h = 65  # Button huge font
-                answer_input.config(font=('Times New Roman', 75))
-                one.config(font=('Arial', btn_h))
-                two.config(font=('Arial', btn_h))
-                three.config(font=('Arial', btn_h))
-                four.config(font=('Arial', btn_h))
-                five.config(font=('Arial', btn_h))
-                six.config(font=('Arial', btn_h))
-                seven.config(font=('Arial', btn_h))
-                eight.config(font=('Arial', btn_h))
-                nine.config(font=('Arial', btn_h))
-                zero.config(font=('Arial', btn_h))
-                clear_button.config(font=('Arial', btn_h))
-                confirm_button.config(font=('Arial', btn_h))
+                self.answer_input.config(font=('Times New Roman', 75))
+                self.one.config(font=('Arial', btn_h))
+                self.two.config(font=('Arial', btn_h))
+                self.three.config(font=('Arial', btn_h))
+                self.four.config(font=('Arial', btn_h))
+                self.five.config(font=('Arial', btn_h))
+                self.six.config(font=('Arial', btn_h))
+                self.seven.config(font=('Arial', btn_h))
+                self.eight.config(font=('Arial', btn_h))
+                self.nine.config(font=('Arial', btn_h))
+                self.zero.config(font=('Arial', btn_h))
+                self.clear_button.config(font=('Arial', btn_h))
+                self.confirm_button.config(font=('Arial', btn_h))
             # Main text resize
             if e.width <= 830:
                 txt_ssf = 51  # Main text smallest font
-                number_display.config(font=('Verdana', txt_ssf))
+                self.number_display.config(font=('Verdana', txt_ssf))
             elif 860 < e.width <= 935:
                 txt_sf = 55  # Main text small font
-                number_display.config(font=('Verdana', txt_sf))
+                self.number_display.config(font=('Verdana', txt_sf))
             elif 935 < e.width <= 1010:
                 txt_m = 61  # Main text medium font
-                number_display.config(font=("Verdana", txt_m))
+                self.number_display.config(font=("Verdana", txt_m))
             elif 1010 < e.width <= 1160:
                 txt_l = 65  # Main text large font
-                number_display.config(font=("Verdana", txt_l))
+                self.number_display.config(font=("Verdana", txt_l))
             elif e.width > 1160:
                 txt_d = 75  # Main text default font
-                number_display.config(font=('Verdana', txt_d))
+                self.number_display.config(font=('Verdana', txt_d))
 
         self.bind("<Configure>", font_resize_main_page)
+
+
+    def main_page_theme_update(self):
+        self.config(bg=bg)
+        self.buttons_container.config(bg=bg)
+        self.number_display.config(bg=bg, fg=fg)
+        self.answer_input.config(bg=bg, fg=fg, disabledbackground=bg, disabledforeground=fg)
+        self.one.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
+        self.two.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
+        self.three.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
+        self.four.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
+        self.five.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
+        self.six.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
+        self.seven.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
+        self.eight.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
+        self.nine.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
+        self.zero.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
+        self.clear_button.config(bg=bg, fg=fg, activeforeground=active_fg, activebackground=bg, disabledforeground=bg)
+        self.confirm_button.config(bg=bg, fg=fg, activeforeground=active_fg, activebackground=bg, disabledforeground=bg)

@@ -349,6 +349,7 @@ class MainPage(Frame):
             self.answer_input.config(state=DISABLED)
             self.confirm_button.config(state=NORMAL)
             self.clear_button.config(state=NORMAL)
+            self.zero.config(state=NORMAL)
 
         def clear():
             self.answer_input.config(state=NORMAL)
@@ -356,6 +357,7 @@ class MainPage(Frame):
             self.answer_input.config(state=DISABLED)
             self.confirm_button.config(state=DISABLED)
             self.clear_button.config(state=DISABLED)
+            self.zero.config(state=DISABLED)
 
         def home():
             controller.show_frame(GreetingsPage)
@@ -378,7 +380,7 @@ class MainPage(Frame):
             self.seven.config(state=NORMAL)
             self.eight.config(state=NORMAL)
             self.nine.config(state=NORMAL)
-            self.zero.config(state=NORMAL)
+            self.zero.config(state=DISABLED)
 
         def buttons_off():
             self.one.config(state=DISABLED)
@@ -480,7 +482,7 @@ class MainPage(Frame):
 
         self.zero = Button(self.buttons_container, text="0", font=("Arial", btn_d), command=lambda: insert_number(0),
                       activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                      bg=num_bg, fg=num_fg)
+                      bg=num_bg, fg=num_fg, state=DISABLED)
         self.zero.grid(column=3, row=0, sticky="nsew")
 
         self.clear_button = Button(self.buttons_container, text="Clear", font=("Arial", btn_d), command=clear,

@@ -1,63 +1,118 @@
-from tkinter import Tk, Frame, Label, Button, Entry, Grid, Toplevel
-from tkinter.constants import NORMAL, SE, TOP, BOTH, CENTER, DISABLED, END, BOTTOM, LEFT, SOLID
+from tkinter import Tk, Frame, Label, Button, Entry, Grid
+from tkinter.constants import NORMAL, TOP, BOTH, CENTER, DISABLED, END, BOTTOM
 from random import randint
+from configparser import ConfigParser
 
-# Default colors
-bg = "#000000"
-fg = "#00ff00"
-active_fg = "#008000"
-home_btn_fg = "#0000FF"
-home_btn_active_fg = "#00008B"
-main_btn_fg = "#00ff00"
-main_btn_bg = "#000000"
-num_bg = "#0a0a0a"
-num_fg = "#00ff00"
-num_active_fg = "#008000"
+# Color section
+parser = ConfigParser()
+parser.read("theme_colors.txt")
+bg = parser.get("colors", "background")
+fg = parser.get("colors", "foreground")
+active_fg = parser.get("colors", "active_foreground")
+home_btn_fg = parser.get("colors", "home_btn_fore")
+home_btn_active_fg = parser.get("colors", "home_bts_active_fore")
+main_btn_bg = parser.get("colors", "main_btn_back")
+num_bg = parser.get("colors", "num_btn_back")
+num_fg = parser.get("colors", "num_btn_fore")
+num_active_fg = parser.get("colors", "num_btn_active_fore")
+
+
+# bg = "#000000"
+# fg = "#00ff00"
+# active_fg = "#008000"
+# home_btn_fg = "#0000FF"
+# home_btn_active_fg = "#00008B"
+# main_btn_bg = "#000000"
+# num_bg = "#0a0a0a"
+# num_fg = "#00ff00"
+# num_active_fg = "#008000"
 
 
 def neon_theme_colors():
-    global bg, fg, active_fg, home_btn_fg, home_btn_active_fg, main_btn_fg, main_btn_bg, num_active_fg, num_bg, num_fg
-    bg = "#000000"
-    fg = "#00ff00"
-    active_fg = "#008000"
-    home_btn_fg = "#0000FF"
-    home_btn_active_fg = "#00008B"
-    main_btn_fg = "#00ff00"
-    main_btn_bg = "#000000"
-    num_bg = "#0a0a0a"
-    num_fg = "#00ff00"
-    num_active_fg = "#008000"
-    with open("themes.txt", 'r+') as file:
-        file.write('neon')
-    file.close
+    global parser
+    parser.read("theme_colors.txt")
+    parser.set("colors", "background", "#000000")
+    parser.set("colors", "foreground", "#00ff00")
+    parser.set("colors", "active_foreground", "#008000")
+    parser.set("colors", "home_btn_fore", "#0000FF")
+    parser.set("colors", "home_bts_active_fore", "#00008B")
+    parser.set("colors", "main_btn_back", "#000000")
+    parser.set("colors", "num_btn_back", "#0a0a0a")
+    parser.set("colors", "num_btn_fore", "#00ff00")
+    parser.set("colors", "num_btn_active_fore", "#008000")
+    with open("theme_colors.txt", 'w') as configfile:
+        parser.write(configfile)
+    # Set colors
+    parser.read("colors.txt")
+    global bg, fg, active_fg, home_btn_fg, home_btn_active_fg, \
+        main_btn_bg, main_btn_active_fg, num_bg, num_fg, num_active_fg
+    bg = parser.get("colors", "background")
+    fg = parser.get("colors", "foreground")
+    active_fg = parser.get("colors", "active_foreground")
+    home_btn_fg = parser.get("colors", "home_btn_fore")
+    home_btn_active_fg = parser.get("colors", "home_bts_active_fore")
+    main_btn_bg = parser.get("colors", "main_btn_back")
+    num_bg = parser.get("colors", "num_btn_back")
+    num_fg = parser.get("colors", "num_btn_fore")
+    num_active_fg = parser.get("colors", "num_btn_active_fore") 
 
 
 def dark_theme_colors():
-    global bg, fg, active_fg, home_btn_fg, home_btn_active_fg, main_btn_fg, main_btn_bg, num_active_fg, num_bg, num_fg
-    bg = "#000000"
-    fg = "#ffffff"
-    active_fg = "#dbdbdb"
-    home_btn_fg = "#f2f2f2"
-    home_btn_active_fg = "#bababa"
-    main_btn_fg = "#ffffff"
-    main_btn_bg = "#000000"
-    num_bg = "#0a0a0a"
-    num_fg = "#ffffff"
-    num_active_fg = "#dbdbdb"
+    global parser
+    parser.read("theme_colors.txt")
+    parser.set("colors", "background", "#000000")
+    parser.set("colors", "foreground", "#ffffff")
+    parser.set("colors", "active_foreground", "#5e5e5e")
+    parser.set("colors", "home_btn_fore", "#474747")
+    parser.set("colors", "home_bts_active_fore", "#333333")
+    parser.set("colors", "main_btn_back", "#000000")
+    parser.set("colors", "num_btn_back", "#0a0a0a")
+    parser.set("colors", "num_btn_fore", "#8c8c8c")
+    parser.set("colors", "num_btn_active_fore", "#5e5e5e")
+    with open("theme_colors.txt", 'w') as configfile:
+        parser.write(configfile)
+    # Set colors
+    parser.read("colors.txt")
+    global bg, fg, active_fg, home_btn_fg, home_btn_active_fg, \
+        main_btn_bg, main_btn_active_fg, num_bg, num_fg, num_active_fg
+    bg = parser.get("colors", "background")
+    fg = parser.get("colors", "foreground")
+    active_fg = parser.get("colors", "active_foreground")
+    home_btn_fg = parser.get("colors", "home_btn_fore")
+    home_btn_active_fg = parser.get("colors", "home_bts_active_fore")
+    main_btn_bg = parser.get("colors", "main_btn_back")
+    num_bg = parser.get("colors", "num_btn_back")
+    num_fg = parser.get("colors", "num_btn_fore")
+    num_active_fg = parser.get("colors", "num_btn_active_fore")
 
 
 def light_theme_colors():
-    global bg, fg, active_fg, home_btn_fg, home_btn_active_fg, main_btn_fg, main_btn_bg, num_active_fg, num_bg, num_fg
-    bg = "#ffffff"
-    fg = "#000000"
-    active_fg = "#dbdbdb"
-    home_btn_fg = "#f2f2f2"
-    home_btn_active_fg = "#000000"
-    main_btn_fg = "#292929"
-    main_btn_bg = "#ffffff"
-    num_bg = "#999999"
-    num_fg = "#292929"
-    num_active_fg = "#000000"
+    global parser
+    parser.read("theme_colors.txt")
+    parser.set("colors", "background", "#bababa")
+    parser.set("colors", "foreground", "#000000")
+    parser.set("colors", "active_foreground", "#000000")
+    parser.set("colors", "home_btn_fore", "#404040")
+    parser.set("colors", "home_bts_active_fore", "#5e5e5e")
+    parser.set("colors", "main_btn_back", "#292929")
+    parser.set("colors", "num_btn_back", "#999999")
+    parser.set("colors", "num_btn_fore", "#4d4d4d")
+    parser.set("colors", "num_btn_active_fore", "#787878")
+    with open("theme_colors.txt", 'w') as configfile:
+        parser.write(configfile)
+    # Set colors
+    parser.read("colors.txt")
+    global bg, fg, active_fg, home_btn_fg, home_btn_active_fg, \
+        main_btn_bg, main_btn_active_fg, num_bg, num_fg, num_active_fg
+    bg = parser.get("colors", "background")
+    fg = parser.get("colors", "foreground")
+    active_fg = parser.get("colors", "active_foreground")
+    home_btn_fg = parser.get("colors", "home_btn_fore")
+    home_btn_active_fg = parser.get("colors", "home_bts_active_fore")
+    main_btn_bg = parser.get("colors", "main_btn_back")
+    num_bg = parser.get("colors", "num_btn_back")
+    num_fg = parser.get("colors", "num_btn_fore")
+    num_active_fg = parser.get("colors", "num_btn_active_fore")
 
 
 class MainAppBody(Tk):
@@ -112,13 +167,13 @@ class GreetingsPage(Frame):
         self.welcome_text.pack(fill=BOTH, expand=True)
 
         self.start_button = Button(self, text="Start", bg=num_bg, fg=fg, font=("Arial", 45),
-                              activeforeground=active_fg, activebackground=bg, bd=0,
-                              disabledforeground=bg, command=lambda: controller.show_frame(MainPage))
+                              activeforeground=active_fg, activebackground=num_bg, bd=0,
+                              disabledforeground=num_bg, command=lambda: controller.show_frame(MainPage))
         self.start_button.pack(fill=BOTH, pady=2, expand=True)
 
         self.settings_button = Button(self, text="Settings", bg=num_bg, fg=home_btn_fg, font=("Arial", 45),
-                                 activeforeground=home_btn_active_fg, activebackground=bg, bd=0,
-                                 disabledforeground=bg, command=lambda: controller.show_frame(SettingsPage))
+                                 activeforeground=home_btn_active_fg, activebackground=num_bg, bd=0,
+                                 disabledforeground=num_bg, command=lambda: controller.show_frame(SettingsPage))
         self.settings_button.pack(fill=BOTH, side=BOTTOM, expand=True)
 
         def font_resize(e):
@@ -166,9 +221,10 @@ class GreetingsPage(Frame):
         self.bind("<Configure>", font_resize)
 
     def greetings_page_theme_update(self):
+        self.config(bg=bg)
         self.welcome_text.config(bg=bg, fg=fg)
-        self.start_button.config(bg=num_bg, fg=fg, activeforeground=active_fg, activebackground=bg, disabledforeground=bg)
-        self.settings_button.config(bg=num_bg, fg=home_btn_fg, activeforeground=home_btn_active_fg, activebackground=bg, disabledforeground=bg)
+        self.start_button.config(bg=num_bg, fg=fg, activeforeground=active_fg, activebackground=num_bg, disabledforeground=num_bg)
+        self.settings_button.config(bg=num_bg, fg=home_btn_fg, activeforeground=home_btn_active_fg, activebackground=num_bg, disabledforeground=num_bg)
 
 
 class SettingsPage(Frame):
@@ -206,8 +262,8 @@ class SettingsPage(Frame):
 
 
         self.home_button = Button(self, text="Home", bg=num_bg, fg=home_btn_fg, font=("Arial", 45),
-                                  activeforeground=home_btn_active_fg, activebackground=bg, bd=0,
-                                  disabledforeground=bg, command=lambda: controller.show_frame(GreetingsPage))
+                                  activeforeground=home_btn_active_fg, activebackground=num_bg, bd=0,
+                                  disabledforeground=num_bg, command=lambda: controller.show_frame(GreetingsPage))
         self.home_button.pack(fill=BOTH, side=BOTTOM, expand=True)
 
         def font_resize_settings(e):
@@ -232,11 +288,13 @@ class SettingsPage(Frame):
         self.bind("<Configure>", font_resize_settings)
 
     def settings_page_theme_update(self):
+        self.config(bg=bg)
         self.main_info.config(bg=bg, fg=fg)
         self.themes_changers_container.config(bg=bg)
-        self.neon_theme_btn.config(bg=num_bg, fg=num_fg, activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg)
         self.dark_theme_btn.config(bg=bg, fg=fg, activeforeground=active_fg, activebackground=bg, disabledforeground=bg)
         self.light_theme_btn.config(bg=bg, fg=fg, activeforeground=active_fg, activebackground=bg, disabledforeground=bg)
+        self.home_button.config(bg=num_bg, fg=home_btn_fg, activeforeground=home_btn_active_fg, activebackground=num_bg, disabledforeground=num_bg)
+        self.neon_theme_btn.config(bg=num_bg, fg=num_fg, activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg)
 
     def change_theme_to_dark(self):
         dark_theme_colors()
@@ -377,52 +435,52 @@ class MainPage(Frame):
 
         self.one = Button(self.buttons_container, text="1", font=("Arial", btn_d), command=lambda: insert_number(1),
                      activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                     bg=num_bg, fg=fg)
+                     bg=num_bg, fg=num_fg)
         self.one.grid(column=0, row=2, sticky="nsew")
 
         self.two = Button(self.buttons_container, text="2", font=("Arial", btn_d), command=lambda: insert_number(2),
                      activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                     bg=num_bg, fg=fg)
+                     bg=num_bg, fg=num_fg)
         self.two.grid(column=1, row=2, sticky="nsew")
 
         self.three = Button(self.buttons_container, text="3", font=("Arial", btn_d), command=lambda: insert_number(3),
                        activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                       bg=num_bg, fg=fg)
+                       bg=num_bg, fg=num_fg)
         self.three.grid(column=2, row=2, sticky="nsew")
 
         self.four = Button(self.buttons_container, text="4", font=("Arial", btn_d), command=lambda: insert_number(4),
                       activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                      bg=num_bg, fg=fg)
+                      bg=num_bg, fg=num_fg)
         self.four.grid(column=0, row=1, sticky="nsew")
 
         self.five = Button(self.buttons_container, text="5", font=("Arial", btn_d), command=lambda: insert_number(5),
                       activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                      bg=num_bg, fg=fg)
+                      bg=num_bg, fg=num_fg)
         self.five.grid(column=1, row=1, sticky="nsew")
 
         self.six = Button(self.buttons_container, text="6", font=("Arial", btn_d), command=lambda: insert_number(6),
                      activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                     bg=num_bg, fg=fg)
+                     bg=num_bg, fg=num_fg)
         self.six.grid(column=2, row=1, sticky="nsew")
 
         self.seven = Button(self.buttons_container, text="7", font=("Arial", btn_d), command=lambda: insert_number(7),
                        activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                       bg=num_bg, fg=fg)
+                       bg=num_bg, fg=num_fg)
         self.seven.grid(column=0, row=0, sticky="nsew")
 
         self.eight = Button(self.buttons_container, text="8", font=("Arial", btn_d), command=lambda: insert_number(8),
                        activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                       bg=num_bg, fg=fg)
+                       bg=num_bg, fg=num_fg)
         self.eight.grid(column=1, row=0, sticky="nsew")
 
         self.nine = Button(self.buttons_container, text="9", font=("Arial", btn_d), command=lambda: insert_number(9),
                       activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                      bg=num_bg, fg=fg)
+                      bg=num_bg, fg=num_fg)
         self.nine.grid(column=2, row=0, sticky="nsew")
 
         self.zero = Button(self.buttons_container, text="0", font=("Arial", btn_d), command=lambda: insert_number(0),
                       activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg,
-                      bg=num_bg, fg=fg)
+                      bg=num_bg, fg=num_fg)
         self.zero.grid(column=3, row=0, sticky="nsew")
 
         self.clear_button = Button(self.buttons_container, text="Clear", font=("Arial", btn_d), command=clear,
@@ -598,15 +656,15 @@ class MainPage(Frame):
         self.buttons_container.config(bg=bg)
         self.number_display.config(bg=bg, fg=fg)
         self.answer_input.config(bg=bg, fg=fg, disabledbackground=bg, disabledforeground=fg)
-        self.one.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
-        self.two.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
-        self.three.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
-        self.four.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
-        self.five.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
-        self.six.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
-        self.seven.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
-        self.eight.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
-        self.nine.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
-        self.zero.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=fg)
+        self.one.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.two.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.three.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.four.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.five.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.six.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.seven.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.eight.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.nine.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.zero.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
         self.clear_button.config(bg=bg, fg=fg, activeforeground=active_fg, activebackground=bg, disabledforeground=bg)
         self.confirm_button.config(bg=bg, fg=fg, activeforeground=active_fg, activebackground=bg, disabledforeground=bg)

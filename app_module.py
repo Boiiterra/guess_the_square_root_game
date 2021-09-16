@@ -17,17 +17,6 @@ num_fg = parser.get("colors", "num_btn_fore")
 num_active_fg = parser.get("colors", "num_btn_active_fore")
 
 
-# bg = "#000000"
-# fg = "#00ff00"
-# active_fg = "#008000"
-# home_btn_fg = "#0000FF"
-# home_btn_active_fg = "#00008B"
-# main_btn_bg = "#000000"
-# num_bg = "#0a0a0a"
-# num_fg = "#00ff00"
-# num_active_fg = "#008000"
-
-
 def neon_theme_colors():
     global parser
     parser.read("theme_colors.txt")

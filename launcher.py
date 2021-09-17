@@ -11,8 +11,7 @@ __author__ = 'TerraBoii'
 __copyright__ = 'Copyright (C) 2021, TerraBoii'
 __credits__ = ['TerraBoii']
 __license__ = 'The MIT License (MIT)'
-with open('version.txt', 'r+') as get_version:
-    __version__ = get_version.read()
+__version__ = '0.1'
 __maintainer__ = 'TerraBoii'
 __email__ = 'terraboii.ytgames@gmail.com'
 __status__ = 'Beta'

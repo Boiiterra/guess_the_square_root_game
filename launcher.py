@@ -75,8 +75,8 @@ class Main:
                     showinfo('Software Update', 'Update Available!')
                     mb1 = askyesno('Update!', f'{_AppName_} {__version__} needs to update to version {data}')
                     if mb1 is True:
-                        open_new_tab('https://github.com/vsantiago113/Tkinter-MyTestApp/raw/master/'
-                                     'updates/MyTestApp.msi?raw=true')
+                        open_new_tab('https://github.com/TerraBoii/guess_the_square_root_game/raw/'
+                                     'main/updates/launcher.msi?raw=true')
                         parent.destroy()
                     else:
                         pass
@@ -173,8 +173,8 @@ class UpdateManager(Toplevel):
             parent.destroy()
 
         def start_update_manager():
-            with get('https://github.com/vsantiago113/Tkinter-MyTestApp/raw/master/'
-                     'updates/MyTestApp.msi?raw=true', stream=True) as r:
+            with get('https://github.com/TerraBoii/guess_the_square_root_game/raw/main/updates/launcher.msi?raw=true',
+                     stream=True) as r:
                 self.progressbar['maximum'] = int(r.headers.get('Content-Length'))
                 r.raise_for_status()
                 with open(f'./tmp/{_AppName_}.msi', 'wb') as f:

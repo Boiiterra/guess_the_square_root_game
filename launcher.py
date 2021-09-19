@@ -65,27 +65,6 @@ def CreateToolTip(widget, text):
 
 class Main:
     def __init__(self, parent):
-        def check_updates():
-            try:
-                # -- Online Version File
-                response = get(
-                    'https://raw.githubusercontent.com/TerraBoii/guess_the_square_root_game/main/version.txt')
-                data = response.text
-
-                if float(data) > float(__version__):
-                    showinfo('Software Update', 'Update Available!')
-                    mb1 = askyesno('Update!', f'{_AppName_} {__version__} needs to update to version {data}')
-                    if mb1 is True:
-                        open_new_tab('https://github.com/TerraBoii/guess_the_square_root_game/raw' 
-                                     '/main/updates/squarerootgame_setup.exe')
-                        parent.destroy()
-                    else:
-                        pass
-                else:
-                    showinfo('Software Update', 'No Updates are Available.')
-            except Exception as e:
-                showinfo('Software Update', 'Unable to Check for Update, Error:' + str(e))
-
         def about_me():
             DisplayAboutMe(parent)
 
@@ -131,10 +110,6 @@ class Main:
                              activebackground='#bababa')
         exit_button.pack(side=LEFT, padx=1, pady=1)
         exit_button.image = self._exit
-
-        check_btn = Button(parent, text='Check for Updates', command=check_updates, bg='#bababa',
-                           activebackground='#bababa')
-        check_btn.place(relx=0.5, rely=0.5, anchor=CENTER)
 
         run_app = Button(parent, text='Open application', command=run_binary, bg='#bababa',
                          activebackground='#bababa')

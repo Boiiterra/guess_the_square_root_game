@@ -3,6 +3,7 @@ from tkinter import font, Menu, Frame, Toplevel, Label, Tk, Button, CENTER, LEFT
 from tkinter.messagebox import showinfo, askyesno
 from tkinter.ttk import Progressbar
 from threading import Thread
+from os import makedirs, path 
 from webbrowser import open_new_tab
 from requests import get
 from win32api import ShellExecute
@@ -11,7 +12,7 @@ __author__ = 'TerraBoii'
 __copyright__ = 'Copyright (C) 2021, TerraBoii'
 __credits__ = ['TerraBoii']
 __license__ = 'The MIT License (MIT)'
-__version__ = '0.16'
+__version__ = '0.17'
 __maintainer__ = 'TerraBoii'
 __email__ = 'terraboii.ytgames@gmail.com'
 __status__ = 'Beta'
@@ -169,15 +170,23 @@ class UpdateManager(Toplevel):
         label.pack()
 
         def install_update():
-            ShellExecute(0, 'open', f'tmp\\launcher.msi', None, None, 10)
+            url = "https://github.com/TerraBoii/guess_the_square_root_game/raw/main/updates/launcher.msi"
+            file_name = url.split('/')[-1].replace(" ", "_")
+            file_path = path.join("setup", file_name)
+            ShellExecute(0, 'open', file_path, None, None, 10)
             parent.destroy()
 
         def start_update_manager():
-            with get('https://github.com/TerraBoii/guess_the_square_root_game/raw/main/updates/launcher.msi?raw=true',
-                     stream=True) as r:
+            url = "https://github.com/TerraBoii/guess_the_square_root_game/raw/main/updates/launcher.msi"
+            dest_folder = "setup"
+            file_name = url.split('/')[-1].replace(" ", "_")
+            file_path = path.join(dest_folder, file_name)
+            if not path.exists(dest_folder):
+                makedirs(dest_folder)  # create folder if it does not exist
+            with get(url=url, stream=True) as r:
                 self.progressbar['maximum'] = int(r.headers.get('Content-Length'))
                 r.raise_for_status()
-                with open(f'./tmp/launcher.msi', 'wb') as f:
+                with open(file_path, 'wb') as f:
                     for chunk in r.iter_content(chunk_size=4096):
                         if chunk:  # filter out keep-alive new chunks
                             f.write(chunk)

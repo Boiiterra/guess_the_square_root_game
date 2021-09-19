@@ -12,7 +12,7 @@ __author__ = 'TerraBoii'
 __copyright__ = 'Copyright (C) 2021, TerraBoii'
 __credits__ = ['TerraBoii']
 __license__ = 'The MIT License (MIT)'
-__version__ = '0.18'
+__version__ = '0.19'
 __maintainer__ = 'TerraBoii'
 __email__ = 'terraboii.ytgames@gmail.com'
 __status__ = 'Beta'
@@ -76,8 +76,8 @@ class Main:
                     showinfo('Software Update', 'Update Available!')
                     mb1 = askyesno('Update!', f'{_AppName_} {__version__} needs to update to version {data}')
                     if mb1 is True:
-                        open_new_tab('https://github.com/TerraBoii/guess_the_square_root_game/raw/'
-                                     'main/updates/launcher.msi?raw=true')
+                        open_new_tab('https://github.com/TerraBoii/guess_the_square_root_game/raw' 
+                                     '/main/updates/squarerootgame_setup.exe')
                         parent.destroy()
                     else:
                         pass
@@ -170,14 +170,14 @@ class UpdateManager(Toplevel):
         label.pack()
 
         def install_update():
-            url = "https://github.com/TerraBoii/guess_the_square_root_game/raw/main/updates/launcher.msi"
+            url = "https://github.com/TerraBoii/guess_the_square_root_game/raw/main/updates/squarerootgame_setup.exe"
             file_name = url.split('/')[-1].replace(" ", "_")
             file_path = path.join("setup", file_name)
             ShellExecute(0, 'open', file_path, None, None, 10)
             parent.destroy()
 
         def start_update_manager():
-            url = "https://github.com/TerraBoii/guess_the_square_root_game/raw/main/updates/launcher.msi"
+            url = "https://github.com/TerraBoii/guess_the_square_root_game/raw/main/updates/squarerootgame_setup.exe"
             dest_folder = "setup"
             file_name = url.split('/')[-1].replace(" ", "_")
             file_path = path.join(dest_folder, file_name)

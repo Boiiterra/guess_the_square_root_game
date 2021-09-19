@@ -11,7 +11,7 @@ __author__ = 'TerraBoii'
 __copyright__ = 'Copyright (C) 2021, TerraBoii'
 __credits__ = ['TerraBoii']
 __license__ = 'The MIT License (MIT)'
-__version__ = '0.14'
+__version__ = '0.15'
 __maintainer__ = 'TerraBoii'
 __email__ = 'terraboii.ytgames@gmail.com'
 __status__ = 'Beta'
@@ -169,7 +169,7 @@ class UpdateManager(Toplevel):
         label.pack()
 
         def install_update():
-            ShellExecute(0, 'open', f'tmp\\{_AppName_}.msi', None, None, 10)
+            ShellExecute(0, 'open', f'tmp\\launcher.msi', None, None, 10)
             parent.destroy()
 
         def start_update_manager():
@@ -177,7 +177,7 @@ class UpdateManager(Toplevel):
                      stream=True) as r:
                 self.progressbar['maximum'] = int(r.headers.get('Content-Length'))
                 r.raise_for_status()
-                with open(f'./tmp/{_AppName_}.msi', 'wb') as f:
+                with open(f'./tmp/launcher.msi', 'wb') as f:
                     for chunk in r.iter_content(chunk_size=4096):
                         if chunk:  # filter out keep-alive new chunks
                             f.write(chunk)

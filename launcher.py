@@ -7,7 +7,7 @@ from os import path, makedirs
 from threading import Thread
 from requests import get
 
-__version__ = '0.23'
+__version__ = '0.24'
 _AppName_ = 'Guess the square root game launcher'
 
 # url for installer
@@ -42,8 +42,8 @@ class UpdateManager(Toplevel):
         label.pack()
 
         def install_update():
-            ShellExecute(0, 'open', file_path, None, None, 10)
             parent.destroy()
+            ShellExecute(0, 'open', "setup\\squarerootgame_setup.exe", None, None, 10)
 
         def start_update_manager():
             destination_folder = "setup"
@@ -67,9 +67,11 @@ class UpdateManager(Toplevel):
                                        value=0,
                                        maximum=0)
         self.progressbar.place(relx=0.5, rely=0.5, anchor="center")
+        self.install_btn = Label(self, text='Wait!')
+        self.install_btn.place(x=-83, relx=1.0, y=-33, rely=1.0)
 
-        self.t1 = Thread(target=start_update_manager)
-        self.t1.start()
+        self.start_manager = Thread(target=start_update_manager)
+        self.start_manager.start()
 
 
 tmp = Tk()

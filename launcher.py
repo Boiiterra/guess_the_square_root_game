@@ -7,7 +7,7 @@ from os import path, makedirs
 from threading import Thread
 from requests import get
 
-__version__ = '0.22'
+__version__ = '0.23'
 _AppName_ = 'Guess the square root game launcher'
 
 # url for installer
@@ -77,8 +77,6 @@ tmp.geometry(f"{650}x{400}+{int((tmp.winfo_screenwidth() - 650) / 2)}+{int((tmp.
 tmp.withdraw()
 
 try:
-    # if path.exists(file_path):
-    #     pass
     response = get(
         'https://raw.githubusercontent.com/TerraBoii/guess_the_square_root_game/main/version.txt')
     data = response.text

@@ -1,4 +1,4 @@
-from tkinter.messagebox import askyesno
+from tkinter.messagebox import askyesno, showinfo
 from tkinter import Tk, Toplevel, Label
 from tkinter.ttk import Progressbar
 from win32api import ShellExecute
@@ -7,7 +7,7 @@ from os import path, makedirs
 from threading import Thread
 from requests import get
 
-__version__ = '1.0'
+__version__ = '1.1'
 _AppName_ = 'Guess the square root game launcher'
 
 # url for installer
@@ -84,8 +84,9 @@ try:
     data = response.text
 
     if float(data) > float(__version__):
+        showinfo("Software update", 'Update Available!')
         get_update = askyesno('Update!',
-                              f'Update Available!\n{_AppName_} {__version__} needs to update to version {data}')
+                              f'{_AppName_} {__version__} needs to update to version {data}')
         if get_update is True:
             UpdateManager(tmp)
         elif get_update is False:

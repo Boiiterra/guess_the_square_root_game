@@ -1,5 +1,5 @@
-from tkinter.messagebox import askyesno, showinfo
-from tkinter import Tk, Toplevel, Button, Label
+from tkinter.messagebox import askyesno
+from tkinter import Tk, Toplevel, Label
 from tkinter.ttk import Progressbar
 from win32api import ShellExecute
 from PIL import Image, ImageTk
@@ -7,12 +7,14 @@ from os import path, makedirs
 from threading import Thread
 from requests import get
 
-__version__ = '0.21'
+__version__ = '0.22'
 _AppName_ = 'Guess the square root game launcher'
 
+# url for installer
 url = "https://github.com/TerraBoii/guess_the_square_root_game/raw/main/updates/squarerootgame_setup.exe"
 file_name = url.split('/')[-1].replace(" ", "_")
 file_path = path.join("setup", file_name)
+
 
 class UpdateManager(Toplevel):
     def __init__(self, parent):
@@ -40,19 +42,13 @@ class UpdateManager(Toplevel):
         label.pack()
 
         def install_update():
-            url = "https://github.com/TerraBoii/guess_the_square_root_game/raw/main/updates/squarerootgame_setup.exe"
-            file_name = url.split('/')[-1].replace(" ", "_")
-            file_path = path.join("setup", file_name)
             ShellExecute(0, 'open', file_path, None, None, 10)
             parent.destroy()
 
         def start_update_manager():
-            url = "https://github.com/TerraBoii/guess_the_square_root_game/raw/main/updates/squarerootgame_setup.exe"
-            dest_folder = "setup"
-            file_name = url.split('/')[-1].replace(" ", "_")
-            file_path = path.join(dest_folder, file_name)
-            if not path.exists(dest_folder):
-                makedirs(dest_folder)  # create folder if it does not exist
+            destination_folder = "setup"
+            if not path.exists(destination_folder):
+                makedirs(destination_folder)  # create folder if it does not exist
             with get(url=url, stream=True) as r:
                 self.progressbar['maximum'] = int(r.headers.get('Content-Length'))
                 r.raise_for_status()
@@ -71,24 +67,25 @@ class UpdateManager(Toplevel):
                                        value=0,
                                        maximum=0)
         self.progressbar.place(relx=0.5, rely=0.5, anchor="center")
-        self.install_btn = Button(self, text='Wait!', state="disabled", command=install_update)
-        self.install_btn.place(x=-83, relx=1.0, y=-33, rely=1.0)
 
         self.t1 = Thread(target=start_update_manager)
         self.t1.start()
 
+
 tmp = Tk()
-tmp.geometry(f"{650}x{400}+{int((tmp.winfo_screenwidth()-650)/2)}+{int((tmp.winfo_screenheight()-400)/2)}")
+tmp.geometry(f"{650}x{400}+{int((tmp.winfo_screenwidth() - 650) / 2)}+{int((tmp.winfo_screenheight() - 400) / 2)}")
 tmp.withdraw()
 
 try:
+    # if path.exists(file_path):
+    #     pass
     response = get(
         'https://raw.githubusercontent.com/TerraBoii/guess_the_square_root_game/main/version.txt')
     data = response.text
 
     if float(data) > float(__version__):
-        showinfo(title='Software Update', message="Update Available!")
-        get_update = askyesno('Update!', f'{_AppName_} {__version__} needs to update to version {data}')
+        get_update = askyesno('Update!',
+                              f'Update Available!\n{_AppName_} {__version__} needs to update to version {data}')
         if get_update is True:
             UpdateManager(tmp)
         elif get_update is False:

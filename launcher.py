@@ -1,5 +1,5 @@
-from tkinter.messagebox import askyesno, showinfo
-from tkinter import Tk, Toplevel, Label
+from tkinter import Button, Tk, Toplevel, Label
+from tkinter.messagebox import askyesno
 from tkinter.ttk import Progressbar
 from win32api import ShellExecute
 from PIL import Image, ImageTk
@@ -7,7 +7,7 @@ from os import path, makedirs
 from threading import Thread
 from requests import get
 
-__version__ = '1.1'
+__version__ = '1.3'
 _AppName_ = 'Guess the square root game launcher'
 
 # url for installer
@@ -37,12 +37,12 @@ class UpdateManager(Toplevel):
 
         image = Image.open('images/update_manager.jpg')
         photo = ImageTk.PhotoImage(image)
-        label = Label(self, image=photo)
-        label.image = photo
-        label.pack()
+        manager_holder = Label(self, image=photo)
+        manager_holder.image = photo
+        manager_holder.pack()
 
         def install_update():
-            parent.destroy()
+            tmp.after(100, tmp.destroy)
             ShellExecute(0, 'open', "setup\\squarerootgame_setup.exe", None, None, 10)
 
         def start_update_manager():
@@ -67,8 +67,8 @@ class UpdateManager(Toplevel):
                                        value=0,
                                        maximum=0)
         self.progressbar.place(relx=0.5, rely=0.5, anchor="center")
-        self.install_btn = Label(self, text='Wait!')
-        self.install_btn.place(x=-83, relx=1.0, y=-33, rely=1.0)
+        self.wait_text = Button(self, text='Wait!', state="disabled")
+        self.wait_text.place(x=-83, relx=1.0, y=-33, rely=1.0)
 
         self.start_manager = Thread(target=start_update_manager)
         self.start_manager.start()
@@ -84,18 +84,17 @@ try:
     data = response.text
 
     if float(data) > float(__version__):
-        showinfo("Software update", 'Update Available!')
-        get_update = askyesno('Update!',
-                              f'{_AppName_} {__version__} needs to update to version {data}')
+        get_update = askyesno('Software update!',
+                              f'Update Available!\n{_AppName_} {__version__} needs to update to version {data}')
         if get_update is True:
             UpdateManager(tmp)
         elif get_update is False:
-            tmp.destroy()
+            tmp.after(100, tmp.destroy)
             ShellExecute(0, 'open', 'binaries\\Guess the square root.exe', None, None, 10)
     else:
-        tmp.destroy()
+        tmp.after(100, tmp.destroy)
         ShellExecute(0, 'open', 'binaries\\Guess the square root.exe', None, None, 10)
 except Exception:
-    tmp.destroy()
+    tmp.after(100, tmp.destroy)
     ShellExecute(0, 'open', 'binaries\\Guess the square root.exe', None, None, 10)
 tmp.mainloop()

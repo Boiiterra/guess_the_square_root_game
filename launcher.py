@@ -7,7 +7,7 @@ from os import path, makedirs
 from threading import Thread
 from requests import get
 
-__version__ = '1.3'
+__version__ = '1.4'
 _AppName_ = 'Guess the square root game launcher'
 
 # url for installer

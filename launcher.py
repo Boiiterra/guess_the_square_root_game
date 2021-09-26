@@ -42,7 +42,7 @@ class UpdateManager(Toplevel):
         manager_holder.pack()
 
         def install_update():
-            tmp.after(100, tmp.destroy)
+            tmp.after(0, tmp.destroy)
             ShellExecute(0, 'open', "setup\\squarerootgame_setup.exe", None, None, 10)
 
         def start_update_manager():
@@ -89,12 +89,12 @@ try:
         if get_update is True:
             UpdateManager(tmp)
         elif get_update is False:
-            tmp.after(100, tmp.destroy)
+            tmp.after(0, tmp.destroy)
             ShellExecute(0, 'open', 'binaries\\Guess the square root.exe', None, None, 10)
     else:
-        tmp.after(100, tmp.destroy)
+        tmp.after(0, tmp.destroy)
         ShellExecute(0, 'open', 'binaries\\Guess the square root.exe', None, None, 10)
 except Exception:
-    tmp.after(100, tmp.destroy)
+    tmp.after(0, tmp.destroy)
     ShellExecute(0, 'open', 'binaries\\Guess the square root.exe', None, None, 10)
 tmp.mainloop()

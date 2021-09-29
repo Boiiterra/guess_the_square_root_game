@@ -8,6 +8,10 @@ from threading import Thread
 from requests import get
 
 __version__ = '1.4'
+__author__ = "TerraBoii"
+# Victor Santiago is an original creator, I just modified entire file because I didn't like the design
+# Link to original project: https://github.com/vsantiago113/Tkinter-MyTestApp
+__credits__ = ["Victor Santiago", 'TerraBoii']
 _AppName_ = 'Guess the square root game launcher'
 
 # url for installer

@@ -261,6 +261,9 @@ class SettingsPage(Frame):
                                   disabledforeground=num_bg, command=lambda: controller.show_frame(GreetingsPage))
         self.home_button.pack(fill='both', side='bottom', expand=True)
 
+        self.placeholder = Label(self, font=('Arial', 55), bg=bg)
+        self.placeholder.pack(side='bottom')
+
         if current_theme == "neon":
             self.dark_theme_btn.config(state='normal')
             self.light_theme_btn.config(state='normal')
@@ -298,6 +301,7 @@ class SettingsPage(Frame):
     def settings_page_theme_update(self):
         self.config(bg=bg)
         self.created_by.config(bg=bg)
+        self.placeholder.config(bg=bg)
         self.theme_info.config(bg=bg, fg=fg)
         self.themes_changers_container.config(bg=bg)
         self.dark_theme_btn.config(bg=bg, fg=fg, activeforeground=active_fg, activebackground=bg, disabledforeground=bg)

@@ -32,8 +32,8 @@ def neon_theme_colors():
     parser.set("colors", "home_btn_fore", "#0000FF")
     parser.set("colors", "main_btn_back", "#000000")
     parser.set("colors", "active_foreground", "#008000")
-    parser.set("colors", "home_bts_active_fore", "#00008B")
     parser.set("colors", "num_btn_active_fore", "#008000")
+    parser.set("colors", "home_bts_active_fore", "#00008B")
     with open("theme_colors.txt", "w") as config_file:
         parser.write(config_file)
 
@@ -179,20 +179,20 @@ class GreetingsPage(Frame):
             """Resizes font based on window's height and width"""
             # Text resize and buttons minimal resize
             if e.width <= 912:
+                self.start_button.config(font=('Arial', 45))
                 self.welcome_text.config(font=('Verdana', 30))
                 self.settings_button.config(font=('Arial', 45))
-                self.start_button.config(font=('Arial', 45))
             elif 912 < e.width <= 1004:
-                self.welcome_text.config(font=("Verdana", 36))
                 self.settings_button.config(font=('Arial', 45))
+                self.welcome_text.config(font=("Verdana", 36))
                 self.start_button.config(font=('Arial', 45))
             elif 1004 < e.width < 1160:
+                self.start_button.config(font=('Arial', 45))
                 self.welcome_text.config(font=("Verdana", 40))
                 self.settings_button.config(font=('Arial', 45))
-                self.start_button.config(font=('Arial', 45))
             elif e.width > 1160:
-                self.welcome_text.config(font=('Verdana', 45))
                 self.settings_button.config(font=('Arial', 45))
+                self.welcome_text.config(font=('Verdana', 45))
                 self.start_button.config(font=('Arial', 45))
 
         self.bind("<Configure>", font_resize)

@@ -686,28 +686,18 @@ class MainPage(Frame):
         self.buttons_container.config(bg=bg)
         self.number_display.config(bg=bg, fg=fg)
         self.answer_input.config(bg=bg, fg=fg, disabledbackground=bg, disabledforeground=fg)
-        self.one.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg,
-                        fg=num_fg)
-        self.two.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg,
-                        fg=num_fg)
-        self.three.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg,
-                          fg=num_fg)
-        self.four.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg,
-                         fg=num_fg)
-        self.five.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg,
-                         fg=num_fg)
-        self.six.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg,
-                        fg=num_fg)
-        self.seven.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg,
-                          fg=num_fg)
-        self.eight.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg,
-                          fg=num_fg)
-        self.nine.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg,
-                         fg=num_fg)
-        self.zero.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg,
-                         fg=num_fg)
         self.clear_button.config(bg=bg, fg=fg, activeforeground=active_fg, activebackground=bg, disabledforeground=bg)
         self.confirm_button.config(bg=bg, fg=fg, activeforeground=active_fg, activebackground=bg, disabledforeground=bg)
+        self.one.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.two.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.six.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.four.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.five.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.nine.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.zero.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.three.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.seven.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
+        self.eight.config(activeforeground=num_active_fg, activebackground=num_bg, disabledforeground=num_bg, bg=num_bg, fg=num_fg)
 
 
 if __name__ == '__main__':

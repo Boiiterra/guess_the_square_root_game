@@ -136,3 +136,6 @@ idea/
 launcher-cache/
 launcher-SetupFiles/
 launcher.aip
+
+# exe files
+Guess*.exe
